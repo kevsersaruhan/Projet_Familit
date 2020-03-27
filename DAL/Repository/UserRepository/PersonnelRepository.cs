@@ -138,7 +138,7 @@ namespace DAL.Repository.UserRepository
                 Password = "********",
                 NbJoursAbsence=(int)reader["NbJourAbsence"],
                 NbJourVacance=(int)reader["NbJourVacances"],
-
+                //test de modification
                
               };
             }
@@ -146,8 +146,8 @@ namespace DAL.Repository.UserRepository
         }
       }
     }
-    p.Nom, Prenom, DateDeNaissance, DateDEngagement,Fonction,[Login], p.AdresseID, a.AdRue,a.AdNum, a.AdCp, a.AdVille,
-      a.AdPays, a.NumTel, a.Email,p.AdresseID, b.AdRue,b.AdNum, b.AdCp, b.AdVille, b.AdPays, b.NumTel, b.Email
+    //p.Nom, Prenom, DateDeNaissance, DateDEngagement,Fonction,[Login], p.AdresseID, a.AdRue,a.AdNum, a.AdCp, a.AdVille,
+    //  a.AdPays, a.NumTel, a.Email,p.AdresseID, b.AdRue,b.AdNum, b.AdCp, b.AdVille, b.AdPays, b.NumTel, b.Email
 
     public Personnel Get(int id)
     {
