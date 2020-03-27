@@ -138,7 +138,6 @@ namespace DAL.Repository.UserRepository
                 Password = "********",
                 NbJoursAbsence=(int)reader["NbJourAbsence"],
                 NbJourVacance=(int)reader["NbJourVacances"],
-                //test de modification
                
               };
             }
