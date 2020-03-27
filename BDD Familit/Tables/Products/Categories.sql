@@ -1,0 +1,6 @@
+CREATE TABLE [dbo].[Categories]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
+  [Nom] NCHAR(20) NOT NULL, 
+  [Details] NTEXT NULL
+)
