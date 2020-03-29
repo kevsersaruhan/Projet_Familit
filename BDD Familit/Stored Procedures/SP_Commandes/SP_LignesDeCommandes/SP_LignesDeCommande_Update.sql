@@ -5,8 +5,9 @@ CREATE PROCEDURE [dbo].[SP_LignesDeCommande_Update]
   @TVAC float,
   @ProductID int,
   @CommandeId int,
-  @id int
+  @id int,
+  @productName NChar(100)
 AS
-	UPDATE [LignesDeCommandes] SET [Total]=@Total,[Quantite]=@quantite,[HTVA]=@HTVA,[TVAC]=@TVAC,[ProductId]=@ProductID,[CommandeId]=@CommandeId
+	UPDATE [LignesDeCommandes] SET [ProductName]=@productName,[Total]=@Total,[Quantite]=@quantite,[HTVA]=@HTVA,[TVAC]=@TVAC,[ProductId]=@ProductID,[CommandeId]=@CommandeId
   WHERE Id=@id
 RETURN 0

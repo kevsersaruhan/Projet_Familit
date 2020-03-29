@@ -1,5 +1,6 @@
 CREATE PROCEDURE [dbo].[SP_Product_Caracteristique_Delete]
-@idproduct int
+@idproduct int,
+@idCaract int
 AS
-DELETE FROM [Product_Caracteristique] WHERE ProductId = @idproduct
+DELETE FROM [Product_Caracteristique] WHERE ProductId = @idproduct AND CaracteristiqueId=@idcaract
 RETURN 0

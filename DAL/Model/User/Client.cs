@@ -15,7 +15,9 @@ namespace DAL.Model.User
       ListFav = new List<Products>();
       ListCommande = new List<CommandeClients>();
     }
-    public List<Products> ListFav { get; set; }
-    public List<CommandeClients> ListCommande { get; set; }
+    public string NumBCE { get; set; }
+    public bool EstFournisseur { get; set; }
+    public IEnumerable<Products> ListFav { get; set; }
+    public IEnumerable<CommandeClients> ListCommande { get; set; }
   }
 }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Repository.UserRepository
+namespace DAL.Utils.UserUtils
 {
-  public interface IClientProductFav
+  public interface IClientProductFavRepository
   {
     void AddProductToFav(int idProduct, int idClient);
     void DeleteProductFav(int id);

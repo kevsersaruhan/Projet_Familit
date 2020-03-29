@@ -1,5 +1,8 @@
-using DAL.Model.Repertoire;
+
+using DAL.Model.Etablissement;
 using DAL.Model.User;
+using DAL.Repository.EtablissementRepository;
+using DAL.Utils.UserUtils;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -14,6 +17,7 @@ namespace DAL.Repository.UserRepository
   public class PersonnelRepository : IPersonnelRepository<int, Personnel>
   {
     private string _constring = ConfigurationManager.ConnectionStrings["BDD_Familit"].ConnectionString;
+    ShowroomRepository ShowroomRepo = new ShowroomRepository();
     public void Add(Personnel entity)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -46,7 +50,6 @@ namespace DAL.Repository.UserRepository
         }
       }
     }
-
     public void ChangePassword(int id, string s)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -63,7 +66,6 @@ namespace DAL.Repository.UserRepository
         }
       }
     }
-
     public void CheckPersonnel(int id, string login, string password)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -77,12 +79,10 @@ namespace DAL.Repository.UserRepository
           command.Parameters.AddWithValue("@id", id);
           connection.Open();
           command.ExecuteNonQuery();
-         
+
         }
       }
     }
-
-
     public void Delete(int id)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -97,7 +97,6 @@ namespace DAL.Repository.UserRepository
         }
       }
     }
-
     public void DoAdmin(int id)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -112,7 +111,6 @@ namespace DAL.Repository.UserRepository
         }
       }
     }
-
     public IEnumerable<Personnel> Get()
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -120,7 +118,7 @@ namespace DAL.Repository.UserRepository
         using (SqlCommand command = connection.CreateCommand())
         {
           command.CommandType = CommandType.StoredProcedure;
-          command.CommandText = "SP_GetAll";
+          command.CommandText = "SP_Personnel_GetAll";
           connection.Open();
           using (SqlDataReader reader = command.ExecuteReader())
           {
@@ -132,40 +130,205 @@ namespace DAL.Repository.UserRepository
                 Nom = (string)reader["Nom"],
                 Prenom = (string)reader["Prenom"],
                 DateDeNaissance = (DateTime)reader["DateDeNaissance"],
-                HireDate =(DateTime)reader["DateDengagement"],
-                Fonction =(string)reader["Fonction"],
-                Login=(string)reader["Login"],
+                HireDate = (DateTime)reader["DateDengagement"],
+                Fonction = (string)reader["Fonction"],
+                Login = (string)reader["Login"],
                 Password = "********",
-                NbJoursAbsence=(int)reader["NbJourAbsence"],
-                NbJourVacance=(int)reader["NbJourVacances"],
-               
+                NbJoursAbsence = (int)reader["NbJourAbsence"],
+                NbJourVacance = (int)reader["NbJourVacances"],
+                Salaire = (double)reader["Salaire"],
+                AdRue = (string)reader["AdRue"],
+                AdNum = (string)reader["AdNum"],
+                AdCP = (int)reader["AdCp"],
+                AdVille = (string)reader["AdVille"],
+                AdPays = (string)reader["AdPays"],
+                NumTel = (int)reader["NumTel"],
+                Email = (string)reader["EMail"],
+                ShowroomId=(int)reader["ShowroomId"],
+                LieuDeTravail = ShowroomRepo.GetShowroomById((int)reader["ShowroomId"])
               };
             }
           }
         }
       }
     }
-    //p.Nom, Prenom, DateDeNaissance, DateDEngagement,Fonction,[Login], p.AdresseID, a.AdRue,a.AdNum, a.AdCp, a.AdVille,
-    //  a.AdPays, a.NumTel, a.Email,p.AdresseID, b.AdRue,b.AdNum, b.AdCp, b.AdVille, b.AdPays, b.NumTel, b.Email
-
     public Personnel Get(int id)
     {
-      throw new NotImplementedException();
-    }
+      using (SqlConnection connection = new SqlConnection(_constring))
+      {
+        using (SqlCommand command = connection.CreateCommand())
+        {
+          command.CommandType = CommandType.StoredProcedure;
+          command.CommandText = "SP_GetByID";
+          command.Parameters.AddWithValue("@id", id);
+          connection.Open();
+          using (SqlDataReader reader = command.ExecuteReader())
+          {
+            if (reader.Read())
+            {
+              return new Personnel()
+              {
+                ID = (int)reader["Id"],
+                Nom = (string)reader["Nom"],
+                Prenom = (string)reader["Prenom"],
+                DateDeNaissance = (DateTime)reader["DateDeNaissance"],
+                HireDate = (DateTime)reader["DateDengagement"],
+                Fonction = (string)reader["Fonction"],
+                Login = (string)reader["Login"],
+                Password = "********",
+                NbJoursAbsence = (int)reader["NbJourAbsence"],
+                NbJourVacance = (int)reader["NbJourVacances"],
+                Salaire = (double)reader["Salaire"],
+                AdRue = (string)reader["AdRue"],
+                AdNum = (string)reader["AdNum"],
+                AdCP = (int)reader["AdCp"],
+                AdVille = (string)reader["AdVille"],
+                AdPays = (string)reader["AdPays"],
+                NumTel = (int)reader["NumTel"],
+                Email = (string)reader["EMail"],
+                ShowroomId = (int)reader["ShowroomId"],
+                LieuDeTravail =ShowroomRepo.GetShowroomById((int)reader["ShowroomId"])
+              };
+            }
+            else
+            {
+              return null;
+            }
+          }
+        }
+      }
 
+    }
     public IEnumerable<Personnel> GetByName(string name)
     {
-      throw new NotImplementedException();
+      using (SqlConnection connection = new SqlConnection(_constring))
+      {
+        using (SqlCommand command = connection.CreateCommand())
+        {
+          command.CommandType = CommandType.StoredProcedure;
+          command.CommandText = "SP_Personnel_GetByName";
+          command.Parameters.AddWithValue("@nom", name);
+          connection.Open();
+          using (SqlDataReader reader = command.ExecuteReader())
+          {
+            while (reader.Read())
+            {
+              yield return new Personnel()
+              {
+                ID = (int)reader["Id"],
+                Nom = (string)reader["Nom"],
+                Prenom = (string)reader["Prenom"],
+                DateDeNaissance = (DateTime)reader["DateDeNaissance"],
+                HireDate = (DateTime)reader["DateDengagement"],
+                Fonction = (string)reader["Fonction"],
+                Login = (string)reader["Login"],
+                Password = "********",
+                NbJoursAbsence = (int)reader["NbJourAbsence"],
+                NbJourVacance = (int)reader["NbJourVacances"],
+                Salaire = (double)reader["Salaire"],
+                AdRue = (string)reader["AdRue"],
+                AdNum = (string)reader["AdNum"],
+                AdCP = (int)reader["AdCp"],
+                AdVille = (string)reader["AdVille"],
+                AdPays = (string)reader["AdPays"],
+                NumTel = (int)reader["NumTel"],
+                Email = (string)reader["EMail"],
+                ShowroomId = (int)reader["ShowroomId"],
+                LieuDeTravail=ShowroomRepo.Get((int)reader["ShowroomId"])
+              };
+            }
+          }
+        }
+      }
     }
-
+    public IEnumerable<Personnel> GetPersonnelByShowroom(int idShowroom)
+    {
+      using (SqlConnection connection = new SqlConnection(_constring))
+      {
+        using (SqlCommand command = connection.CreateCommand())
+        {
+          command.CommandType = CommandType.StoredProcedure;
+          command.CommandText = "SP_Personnel_GetByShowroom";
+          command.Parameters.AddWithValue("@idshowroom", idShowroom);
+          connection.Open();
+          using (SqlDataReader reader = command.ExecuteReader())
+          {
+            while (reader.Read())
+            {
+              yield return new Personnel()
+              {
+                ID = (int)reader["Id"],
+                Nom = (string)reader["Nom"],
+                Prenom = (string)reader["Prenom"],
+                DateDeNaissance = (DateTime)reader["DateDeNaissance"],
+                HireDate = (DateTime)reader["DateDengagement"],
+                Fonction = (string)reader["Fonction"],
+                Login = (string)reader["Login"],
+                Password = "********",
+                NbJoursAbsence = (int)reader["NbJourAbsence"],
+                NbJourVacance = (int)reader["NbJourVacances"],
+                Salaire = (double)reader["Salaire"],
+                AdRue = (string)reader["AdRue"],
+                AdNum = (string)reader["AdNum"],
+                AdCP = (int)reader["AdCp"],
+                AdVille = (string)reader["AdVille"],
+                AdPays = (string)reader["AdPays"],
+                NumTel = (int)reader["NumTel"],
+                Email = (string)reader["EMail"],
+                ShowroomId = (int)reader["ShowroomId"],
+                LieuDeTravail = ShowroomRepo.Get((int)reader["ShowroomId"])
+              };
+            }
+          }
+        }
+      }
+    }
     public void UnsetAdmin(int id)
     {
-      throw new NotImplementedException();
+      using (SqlConnection connection = new SqlConnection(_constring))
+      {
+        using (SqlCommand command = connection.CreateCommand())
+        {
+          command.CommandType = CommandType.StoredProcedure;
+          command.CommandText = "SP_Personnel_UnsetAdmin";
+          command.Parameters.AddWithValue("@id", id);
+          connection.Open();
+          command.ExecuteNonQuery();
+        }
+      }
     }
-
-    public void Update(int id)
+    public void Update(int id, Personnel entity)
     {
-      throw new NotImplementedException();
+      using (SqlConnection connection = new SqlConnection(_constring))
+      {
+        using (SqlCommand command = connection.CreateCommand())
+        {
+          command.CommandType = CommandType.StoredProcedure;
+          command.CommandText = "SP_Personnel_Update";
+          command.Parameters.AddWithValue("@nom", entity.Nom);
+          command.Parameters.AddWithValue("@Prenom", entity.Prenom);
+          command.Parameters.AddWithValue("@dateDeNaissance", entity.DateDeNaissance);
+          command.Parameters.AddWithValue("@Login", entity.Login);
+          command.Parameters.AddWithValue("@Password", entity.Password);
+          command.Parameters.AddWithValue("@Function", entity.Fonction);
+          command.Parameters.AddWithValue("@IsAdmin", entity.IsAdmin);
+          command.Parameters.AddWithValue("@DateDengagement", entity.HireDate);
+          command.Parameters.AddWithValue("@NbJourAbsence", entity.NbJoursAbsence);
+          command.Parameters.AddWithValue("@NbJourVacances", entity.NbJourVacance);
+          command.Parameters.AddWithValue("@ShowroomId", entity.ShowroomId);
+          command.Parameters.AddWithValue("@adRue", entity.AdRue);
+          command.Parameters.AddWithValue("@adNum", entity.AdNum);
+          command.Parameters.AddWithValue("@adCp", entity.AdCP);
+          command.Parameters.AddWithValue("@adVille", entity.AdVille);
+          command.Parameters.AddWithValue("@adPays", entity.AdPays);
+          command.Parameters.AddWithValue("@email", entity.Email);
+          command.Parameters.AddWithValue("@numTel", entity.NumTel);
+          command.Parameters.AddWithValue("@id", id);
+          connection.Open();
+          command.ExecuteNonQuery();
+
+        }
+      }
     }
   }
 }

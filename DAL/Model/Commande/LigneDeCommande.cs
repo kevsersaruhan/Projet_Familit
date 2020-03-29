@@ -12,7 +12,7 @@ namespace DAL.Model.Commande
   {
     public int ID { get; set; }
     public int IDCommande { get; set; }
-    public Products Produc { get; set; }
+    public Products Product { get; set; }
     public int  Quantite { get; set; }
     public double TOTAL { get; set; }
     public double HTVA { get; set; }

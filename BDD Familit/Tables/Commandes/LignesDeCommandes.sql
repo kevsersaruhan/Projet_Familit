@@ -1,6 +1,7 @@
 CREATE TABLE [dbo].[LignesDeCommandes]
 (
-	[Id] INT NOT NULL PRIMARY KEY, 
+	[Id] INT NOT NULL PRIMARY KEY,
+  [ProductName] NCHAR(100),
     [Total] FLOAT NOT NULL, 
     [Quantite] INT NOT NULL, 
     [HTVA] FLOAT NOT NULL, 

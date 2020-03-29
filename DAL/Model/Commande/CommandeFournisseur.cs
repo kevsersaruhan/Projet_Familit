@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Model.Commande
 {
-  public class CommandeFournisseur : Commandes
+  public class CommandeFournisseur : CommandeClient
   {
 
     public int FournisseurID { get; set; }

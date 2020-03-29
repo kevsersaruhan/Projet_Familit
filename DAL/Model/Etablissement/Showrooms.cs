@@ -11,6 +11,10 @@ namespace DAL.Model.Etablissement
 {
   public class Showrooms 
   {
+    public Showrooms()
+    {
+      PersonnelList = new List<Personnel>();
+    }
     public int ID { get; set; }
     public string Nom { get; set; }
     public string NumBCE { get; set; }
@@ -21,6 +25,6 @@ namespace DAL.Model.Etablissement
     public string AdPays { get; set; }
     public int NumTel { get; set; }
     public string Email { get; set; }
-    public List<Personnel>  PersonnelList { get; set; }
+    public IEnumerable<Personnel>  PersonnelList { get; set; }
   }
 }

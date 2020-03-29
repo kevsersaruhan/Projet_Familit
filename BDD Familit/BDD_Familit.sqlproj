@@ -149,18 +149,18 @@
     <Build Include="Stored Procedures\SP_Etablissement\SP_Showroom_GetAll.sql" />
     <Build Include="Stored Procedures\SP_Etablissement\SP_Showroom_GetById.sql" />
     <Build Include="Stored Procedures\SP_Etablissement\SP_Showroom_GetByName.sql" />
-    <Build Include="Stored Procedures\SP_Repertoire\SP_Adresse_GetAll.sql" />
-    <Build Include="Stored Procedures\SP_Repertoire\SP_Adresse_GetAllById.sql" />
     <Build Include="Functions\SF_HashPassword.sql" />
     <Build Include="Stored Procedures\SP_Users\SP_Personnel\SP_Personnel_UnsetAdmin.sql" />
     <Build Include="Stored Procedures\SP_Products\SP_Products\SP_Product_Caracteristiques\SP_Product_Caracteristique_Add.sql" />
     <Build Include="Stored Procedures\SP_Products\SP_Products\SP_Product_Caracteristiques\SP_Product_Caracteristique_Delete.sql" />
     <Build Include="Stored Procedures\SP_Products\SP_Products\SP_Product_Caracteristiques\SP_Product_Caracteristique_GetAll.sql" />
-    <Build Include="Stored Procedures\SP_Products\SP_Products\SP_Product_Caracteristiques\SP_Product_Caracteristique.sql" />
     <Build Include="Stored Procedures\SP_Users\SP_Client\SP_Product_Fav\SP_Client_Product_Add.sql" />
     <Build Include="Stored Procedures\SP_Users\SP_Client\SP_Product_Fav\SP_Client_Product_Delete.sql" />
     <Build Include="Stored Procedures\SP_Products\SP_Products\SP_Product_Caracteristiques\SP_Product_Caracteristique_GetByCaracteristique.sql" />
     <Build Include="Stored Procedures\SP_Products\SP_Products\SP_Product_Caracteristiques\SP_Product_Caracteristique_GetByProduct.sql" />
+    <Build Include="Stored Procedures\SP_Users\SP_Client\SP_Product_Fav\SP_Client_Product_Fav.sql" />
+    <Build Include="Stored Procedures\SP_Commandes\SP_Commande_GetCommandeClient.sql" />
+    <Build Include="Stored Procedures\SP_Users\SP_Personnel\SP_Personnel_GetByShowroom.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BDD Familit.refactorlog" />

@@ -1,4 +1,5 @@
-using DAL.Utils.UserUtils;
+using DAL.Model.Product;
+using DAL.Utils.ProductUtils;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -8,36 +9,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Repository.UserRepository
+namespace DAL.Repository.ProductsRepository
 {
-  public class ClientProductFavRepository : IClientProductFavRepository
+  public class ProductCaracteristiqueRepository : IProductCaracteristiqueRepository
   {
     private string _constring = ConfigurationManager.ConnectionStrings["BDD_Familit"].ConnectionString;
-    public void AddProductToFav(int idProduct, int idClient)
+    public void AddCaracteristiqueToProduct(int idCaract, int idProduct)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
       {
         using (SqlCommand command = connection.CreateCommand())
         {
           command.CommandType = CommandType.StoredProcedure;
-          command.CommandText = "SP_Client_Product_Add";
-          command.Parameters.AddWithValue("@idclient", idClient);
-          command.Parameters.AddWithValue("@idproduct", idProduct);
+          command.CommandText = "SP_Product_Caracteristique_Add";
+          command.Parameters.AddWithValue("@idProduct",idProduct);
+          command.Parameters.AddWithValue("@idCaracteristique", idCaract);
           connection.Open();
           command.ExecuteScalar();
+
         }
       }
     }
-
-    public void DeleteProductFav(int id)
+    public void DeleteCaracteristiqueFromProduct(int idCaract, int idProduct)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
       {
         using (SqlCommand command = connection.CreateCommand())
         {
           command.CommandType = CommandType.StoredProcedure;
-          command.CommandText = "SP_Client_Product_Delete";
-          command.Parameters.AddWithValue("@id", id);
+          command.CommandText = "SP_Product_Caracteristique_delete";
+          command.Parameters.AddWithValue("@idproduct", idProduct);
+          command.Parameters.AddWithValue("@idCaract", idCaract);
           connection.Open();
           command.ExecuteNonQuery();
         }

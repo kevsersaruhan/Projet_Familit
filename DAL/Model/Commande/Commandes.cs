@@ -17,7 +17,7 @@ namespace DAL.Model.Commande
     }
 
     public int ID { get; set; }
-    public List<LigneDeCommande> DetailsCommande { get; set; }
+    public IEnumerable<LigneDeCommande> DetailsCommande { get; set; }
     public DateTime DateDeCommande { get; set; }
     public bool? Livraison { get; set; }
     public DateTime? DateDeLivraison { get; set; }
@@ -25,6 +25,6 @@ namespace DAL.Model.Commande
     public double Acompte { get; set; }
     public double Solde { get; set; }
     public Showrooms Showroom { get; set; }
-
+    public string TypeDeCommande { get; set; }
   }
 }
