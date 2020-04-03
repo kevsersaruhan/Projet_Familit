@@ -26,5 +26,6 @@ namespace DAL.Model.Etablissement
     public int NumTel { get; set; }
     public string Email { get; set; }
     public IEnumerable<Personnel>  PersonnelList { get; set; }
+    public bool IsActif { get; set; }
   }
 }

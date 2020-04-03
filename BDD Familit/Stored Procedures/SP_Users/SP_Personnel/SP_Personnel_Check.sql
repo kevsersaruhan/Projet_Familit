@@ -6,5 +6,4 @@ AS
 	SET @persoId = 0;
 	IF EXISTS (SELECT Id FROM Personnel WHERE [Login] = @login AND [Password] = dbo.SF_HashPassword(@password))
 		SELECT @persoId = Id FROM Personnel WHERE [Login] = @login
-RETURN 0
 

@@ -17,5 +17,7 @@ namespace DAL.Model.Commande
     public double TOTAL { get; set; }
     public double HTVA { get; set; }
     public double  TVAC { get; set; }
+    public string ProductName { get; set; }
+    public int ProductID { get; set; }
   }
 }

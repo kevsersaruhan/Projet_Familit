@@ -9,9 +9,10 @@ CREATE PROCEDURE [dbo].[SP_Showroom_Update]
   @email NVARCHAR(60),
   @numTel int,
   @adresseId int,
-  @id int
+  @id int,
+  @IsActif bit
 
 AS
   EXEC [dbo].SP_Adresse_Update @adRue, @adNum, @adCp, @adVille, @adPays,@email, @numTel, @adresseId
-	UPDATE [Showroom] SET [Nom]=@nom,[NumBCE]=@numBCE,[AdresseId]=@adresseId WHERE Id =@id
-RETURN 0
+	UPDATE [Showroom] SET [Nom]=@nom,[NumBCE]=@numBCE,[AdresseId]=@adresseId,[IsActif]=IsActif WHERE Id =@id
+

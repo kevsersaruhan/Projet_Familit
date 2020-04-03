@@ -1,4 +1,5 @@
 using DAL.Model.Commande;
+using DAL.Model.Etablissement;
 using DAL.Repository.CommandesRepository.LignesDeCommandeRepository;
 using DAL.Repository.EtablissementRepository;
 using DAL.Utils;
@@ -16,8 +17,6 @@ namespace DAL.Repository.CommandesRepository
   public class CommandeClientRepository : IRepository<int, CommandeClients>
   {
     private string _constring = ConfigurationManager.ConnectionStrings["BDD_Familit"].ConnectionString;
-    ShowroomRepository showroomRepo = new ShowroomRepository();
-    LigneDeCommandeRepository ligneRepo = new LigneDeCommandeRepository();
     public void Add(CommandeClients entity)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -38,7 +37,10 @@ namespace DAL.Repository.CommandesRepository
           command.Parameters.AddWithValue("@ClientId", entity.ClientID);
           command.Parameters.AddWithValue("@PersonnelId", entity.VendeurID);
           command.Parameters.AddWithValue("@ShowroomId", entity.Showroom.ID);
-          connection.Open();
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           entity.ID = (int)command.ExecuteScalar();
         }
       }
@@ -53,7 +55,10 @@ namespace DAL.Repository.CommandesRepository
           command.CommandType = CommandType.StoredProcedure;
           command.CommandText = "SP_Commande_Delete";
           command.Parameters.AddWithValue("@id", id);
-          connection.Open();
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           command.ExecuteNonQuery();
         }
       }
@@ -67,7 +72,10 @@ namespace DAL.Repository.CommandesRepository
         {
           command.CommandType = CommandType.StoredProcedure;
           command.CommandText = "SP_Commande_GetAll";
-          connection.Open();
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           using (SqlDataReader reader = command.ExecuteReader())
           {
             while (reader.Read())
@@ -84,9 +92,22 @@ namespace DAL.Repository.CommandesRepository
                 DateDeLivraison=(DateTime)reader["DateDeLivraison"],
                 TypeDeCommande=(string)reader["TypeDeCommande"],
                 Livraison=(bool)reader["Livraison"],
-                DetailsCommande=ligneRepo.GetByCommandeId((int)reader["Id"]),
-                Showroom=showroomRepo.Get((int)reader["ShowroomID"]),
-                ClientID=(int)reader["ClientId"],
+                Showroom = new Showrooms
+                {
+                  ID = (int)reader["IDShowroom"],
+                  Nom = (string)reader["Nom"],
+                  NumBCE = (string)reader["NumBCE"],
+                  AdRue = (string)reader["AdRue"],
+                  AdNum = (string)reader["AdNum"],
+                  AdCP = (int)reader["AdCp"],
+                  AdVille = (string)reader["AdVille"],
+                  AdPays = (string)reader["AdPays"],
+                  NumTel = (int)reader["NumTel"],
+                  Email = (string)reader["EMail"],
+                  IsActif = (bool)reader["IsActif"]
+                },
+                ShowroomID = (int)reader["ComShowroomID"],
+                ClientID =(int)reader["ClientId"],
                 VendeurID=(int)reader["PersonnelId"]
               };
             }
@@ -104,7 +125,10 @@ namespace DAL.Repository.CommandesRepository
           command.CommandType = CommandType.StoredProcedure;
           command.CommandText = "SP_Commande_GetByID";
           command.Parameters.AddWithValue("@id", id);
-          connection.Open();
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           using (SqlDataReader reader = command.ExecuteReader())
           {
             if (reader.Read())
@@ -121,9 +145,22 @@ namespace DAL.Repository.CommandesRepository
                 DateDeLivraison = (DateTime)reader["DateDeLivraison"],
                 TypeDeCommande = (string)reader["TypeDeCommande"],
                 Livraison = (bool)reader["Livraison"],
-                DetailsCommande = ligneRepo.GetByCommandeId((int)reader["Id"]),
-                Showroom = showroomRepo.Get((int)reader["ShowroomID"]),
-                ClientID = (int)reader["ClientId"],
+               Showroom = new Showrooms
+               {
+                 ID = (int)reader["IDShowroom"],
+                 Nom = (string)reader["Nom"],
+                 NumBCE = (string)reader["NumBCE"],
+                 AdRue = (string)reader["AdRue"],
+                 AdNum = (string)reader["AdNum"],
+                 AdCP = (int)reader["AdCp"],
+                 AdVille = (string)reader["AdVille"],
+                 AdPays = (string)reader["AdPays"],
+                 NumTel = (int)reader["NumTel"],
+                 Email = (string)reader["EMail"],
+                 IsActif = (bool)reader["IsActif"]
+               },
+               ShowroomID = (int)reader["ComShowroomID"],
+               ClientID = (int)reader["ClientId"],
                 VendeurID = (int)reader["PersonnelId"]
               };
             }
@@ -156,7 +193,10 @@ namespace DAL.Repository.CommandesRepository
           command.Parameters.AddWithValue("@PersonnelId", entity.VendeurID);
           command.Parameters.AddWithValue("@ShowroomId", entity.Showroom.ID);
           command.Parameters.AddWithValue("@id", id);
-          connection.Open();
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           command.ExecuteNonQuery();
         }
       }
@@ -172,30 +212,45 @@ namespace DAL.Repository.CommandesRepository
           command.CommandType = CommandType.StoredProcedure;
           command.CommandText = "SP_Commande_GetCommandeClient";
           command.Parameters.AddWithValue("@id", idclient);
-          connection.Open();
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           using (SqlDataReader reader = command.ExecuteReader())
           {
             while (reader.Read())
             {
-              CommandeClients c = new CommandeClients();
-
-              c.ID = (int)reader["Id"];
-              c.DateDeCommande = (DateTime)reader["DateCommande"];
-              c.Livraison = (bool)reader["Livraison"];
-              c.DateDeLivraison = (DateTime)reader["DateDeLivraison"];
-              c.TypeDeCommande = (string)reader["TypeDeCommande"];
-              c.Total = (double)reader["Total"];
-              c.Acompte = (double)reader["Acompte"];
-              c.Solde = (double)reader["Solde"];
-              c.Statut = (string)reader["Statut"];
-              c.MoyenDePaiement = (string)reader["MoyenDePaiement"];
-              c.Showroom = showroomRepo.Get((int)reader["ShowroomID"]);
-              c.ClientID = (int)reader["ClientId"];
-              c.VendeurID = (int)reader["PersonnelId"];
-              c.DetailsCommande = ligneRepo.GetByCommandeId((int)reader["Id"]);
-              ListeCommandeClient.Add(c);
+              yield return new CommandeClients()
+              {
+                ID = (int)reader["Id"],
+                DateDeCommande = (DateTime)reader["DateCommande"],
+                Total = (double)reader["Total"],
+                Acompte = (double)reader["Acompte"],
+                Solde = (double)reader["Solde"],
+                MoyenDePaiement = (string)reader["MoyenDePaiement"],
+                Statut = (string)reader["Statut"],
+                DateDeLivraison = (DateTime)reader["DateDeLivraison"],
+                TypeDeCommande = (string)reader["TypeDeCommande"],
+                Livraison = (bool)reader["Livraison"],
+                Showroom = new Showrooms
+                {
+                  ID = (int)reader["IDShowroom"],
+                  Nom = (string)reader["Nom"],
+                  NumBCE = (string)reader["NumBCE"],
+                  AdRue = (string)reader["AdRue"],
+                  AdNum = (string)reader["AdNum"],
+                  AdCP = (int)reader["AdCp"],
+                  AdVille = (string)reader["AdVille"],
+                  AdPays = (string)reader["AdPays"],
+                  NumTel = (int)reader["NumTel"],
+                  Email = (string)reader["EMail"],
+                  IsActif = (bool)reader["IsActif"]
+                },
+                ShowroomID = (int)reader["ComShowroomID"],
+                ClientID = (int)reader["ClientId"],
+                VendeurID = (int)reader["PersonnelId"]
+              };
             }
-            return ListeCommandeClient;
           }
         }
       }

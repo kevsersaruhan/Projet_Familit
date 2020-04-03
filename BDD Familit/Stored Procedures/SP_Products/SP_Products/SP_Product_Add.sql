@@ -6,11 +6,12 @@ CREATE PROCEDURE [dbo].[SP_Product_Add]
   @nbPiece int,
   @details NTEXT,
   @catId int,
-  @clientId int
+  @clientId int,
+  @isActif bit
 AS
-	INSERT INTO Product ([Nom],[Prix],[PrixDAchatHTVA],[TVA],[NbPiece],[Details],[CategorieId],[ClientId])
+	INSERT INTO Product ([Nom],[Prix],[PrixDAchatHTVA],[TVA],[NbPiece],[Details],[CategorieId],[ClientId],[IsActif])
   OUTPUT INSERTED.Id
-  VALUES(@nom,@prix,@prixDAchatHTVA,@TVA,@nbPiece,@details,@catId,@clientId)
+  VALUES(@nom,@prix,@prixDAchatHTVA,@TVA,@nbPiece,@details,@catId,@clientId,@isActif)
 
 
 RETURN 0

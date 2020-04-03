@@ -13,6 +13,7 @@ namespace DAL.Utils.UserUtils
     void ChangePassword(TKey id, string password);
     void CheckClient(TKey id, string login, string password);
     IEnumerable<T> GetByName(string name);
-
+    void Desactiver(TKey id);
+    void Activer(TKey id);
   }
 }

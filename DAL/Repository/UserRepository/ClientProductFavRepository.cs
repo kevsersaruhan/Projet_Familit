@@ -23,7 +23,10 @@ namespace DAL.Repository.UserRepository
           command.CommandText = "SP_Client_Product_Add";
           command.Parameters.AddWithValue("@idclient", idClient);
           command.Parameters.AddWithValue("@idproduct", idProduct);
-          connection.Open();
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           command.ExecuteScalar();
         }
       }
@@ -38,7 +41,10 @@ namespace DAL.Repository.UserRepository
           command.CommandType = CommandType.StoredProcedure;
           command.CommandText = "SP_Client_Product_Delete";
           command.Parameters.AddWithValue("@id", id);
-          connection.Open();
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           command.ExecuteNonQuery();
         }
       }

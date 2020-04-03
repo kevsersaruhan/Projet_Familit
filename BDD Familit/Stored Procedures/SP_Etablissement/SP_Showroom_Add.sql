@@ -7,12 +7,13 @@ CREATE PROCEDURE [dbo].[SP_Showroom_Add]
   @adVille NVARCHAR(60),
   @adPays NVARCHAR(60),
   @email NVARCHAR(60),
-  @numTel int
+  @numTel int,
+  @isActif bit
 
 AS
   DECLARE @adresseId int
   EXEC @adresseId = [dbo].SP_Adresse_Add @adRue,@adNum,@adCp,@adVille,@adPays,@numTel,@email
-	INSERT INTO Showroom([Nom],[NumBCE],[AdresseId])
+	INSERT INTO Showroom([Nom],[NumBCE],[AdresseId],[IsActif])
   OUTPUT inserted.Id
-  VALUES (@nom,@numBCE,@adresseId)
-RETURN 0
+  VALUES (@nom,@numBCE,@adresseId,@isActif)
+

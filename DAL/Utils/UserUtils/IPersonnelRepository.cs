@@ -14,5 +14,7 @@ namespace DAL.Utils.UserUtils
     void DoAdmin(TKey id);
     void UnsetAdmin(TKey id);
     IEnumerable<T> GetPersonnelByShowroom(int idShowroom);
+    void Desactiver(TKey id);
+    void Activer(TKey id);
   }
 }

@@ -16,6 +16,25 @@ namespace DAL.Repository.EtablissementRepository
   {
     private string _constring = ConfigurationManager.ConnectionStrings["BDD_Familit"].ConnectionString;
     PersonnelRepository persoRepo = new PersonnelRepository();
+
+    public void Activer(int id)
+    {
+      using (SqlConnection connection = new SqlConnection(_constring))
+      {
+        using (SqlCommand command = connection.CreateCommand())
+        {
+          command.CommandType = CommandType.StoredProcedure;
+          command.CommandText = "SP_Showroom_Activer";
+          command.Parameters.AddWithValue("@id", id);
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
+          command.ExecuteNonQuery();
+        }
+      }
+    }
+
     public void Add(Showrooms entity)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -25,7 +44,7 @@ namespace DAL.Repository.EtablissementRepository
           command.CommandType = CommandType.StoredProcedure;
           command.CommandText = "SP_Showroom_Add";
           command.Parameters.AddWithValue("@nom", entity.Nom);
-          command.Parameters.AddWithValue("@NumBCE", entity.NumBCE);
+          command.Parameters.AddWithValue("@numBCE", entity.NumBCE);
           command.Parameters.AddWithValue("@adRue", entity.AdRue);
           command.Parameters.AddWithValue("@adNum", entity.AdNum);
           command.Parameters.AddWithValue("@adCp", entity.AdCP);
@@ -33,7 +52,11 @@ namespace DAL.Repository.EtablissementRepository
           command.Parameters.AddWithValue("@adPays", entity.AdPays);
           command.Parameters.AddWithValue("@email", entity.Email);
           command.Parameters.AddWithValue("@numTel", entity.NumTel);
-          connection.Open();
+          command.Parameters.AddWithValue("@isActif", entity.IsActif);
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           entity.ID = (int)command.ExecuteScalar();
         }
       }
@@ -48,7 +71,28 @@ namespace DAL.Repository.EtablissementRepository
           command.CommandType = CommandType.StoredProcedure;
           command.CommandText = "SP_Showroom_Delete";
           command.Parameters.AddWithValue("@id", id);
-          connection.Open();
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
+          command.ExecuteNonQuery();
+        }
+      }
+    }
+
+    public void Desactiver(int id)
+    {
+      using (SqlConnection connection = new SqlConnection(_constring))
+      {
+        using (SqlCommand command = connection.CreateCommand())
+        {
+          command.CommandType = CommandType.StoredProcedure;
+          command.CommandText = "SP_Showroom_Desactiver";
+          command.Parameters.AddWithValue("@id", id);
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           command.ExecuteNonQuery();
         }
       }
@@ -62,14 +106,17 @@ namespace DAL.Repository.EtablissementRepository
         {
           command.CommandType = CommandType.StoredProcedure;
           command.CommandText = "SP_Showroom_GetAll";
-          connection.Open();
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           using (SqlDataReader reader = command.ExecuteReader())
           {
             while (reader.Read())
             {
               yield return new Showrooms()
               {
-                ID = (int)reader["Id"],
+                ID = (int)reader["ShowroomId"],
                 Nom = (string)reader["Nom"],
                 NumBCE = (string)reader["NumBCE"],
                 AdRue = (string)reader["AdRue"],
@@ -79,7 +126,7 @@ namespace DAL.Repository.EtablissementRepository
                 AdPays = (string)reader["AdPays"],
                 NumTel = (int)reader["NumTel"],
                 Email = (string)reader["EMail"],
-                PersonnelList = persoRepo.GetPersonnelByShowroom((int)reader["Id"])
+                IsActif = (bool)reader["IsActif"]
               };
             }
           }
@@ -96,14 +143,17 @@ namespace DAL.Repository.EtablissementRepository
           command.CommandType = CommandType.StoredProcedure;
           command.CommandText = "SP_Showroom_GetByID";
           command.Parameters.AddWithValue("@id", id);
-          connection.Open();
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           using (SqlDataReader reader = command.ExecuteReader())
           {
             if (reader.Read())
             {
               return new Showrooms()
               {
-                ID = (int)reader["Id"],
+                ID = (int)reader["ShowroomId"],
                 Nom = (string)reader["Nom"],
                 NumBCE = (string)reader["NumBCE"],
                 AdRue = (string)reader["AdRue"],
@@ -113,7 +163,7 @@ namespace DAL.Repository.EtablissementRepository
                 AdPays = (string)reader["AdPays"],
                 NumTel = (int)reader["NumTel"],
                 Email = (string)reader["EMail"],
-                PersonnelList = persoRepo.GetPersonnelByShowroom(id)
+                IsActif = (bool)reader["IsActif"]
               };
             }
             else
@@ -134,14 +184,17 @@ namespace DAL.Repository.EtablissementRepository
           command.CommandType = CommandType.StoredProcedure;
           command.CommandText = "SP_Showroom_GetByName";
           command.Parameters.AddWithValue("@nom", name);
-          connection.Open();
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           using (SqlDataReader reader = command.ExecuteReader())
           {
             while (reader.Read())
             {
               yield return new Showrooms()
               {
-                ID = (int)reader["Id"],
+                ID = (int)reader["ShowroomId"],
                 Nom = (string)reader["Nom"],
                 NumBCE = (string)reader["NumBCE"],
                 AdRue = (string)reader["AdRue"],
@@ -149,9 +202,9 @@ namespace DAL.Repository.EtablissementRepository
                 AdCP = (int)reader["AdCp"],
                 AdVille = (string)reader["AdVille"],
                 AdPays = (string)reader["AdPays"],
+                IsActif = (bool)reader["IsActif"],
                 NumTel = (int)reader["NumTel"],
-                Email = (string)reader["EMail"],
-                PersonnelList = persoRepo.GetPersonnelByShowroom((int)reader["Id"])
+                Email = (string)reader["EMail"]
               };
             }
           }
@@ -177,7 +230,11 @@ namespace DAL.Repository.EtablissementRepository
           command.Parameters.AddWithValue("@email", entity.Email);
           command.Parameters.AddWithValue("@numTel", entity.NumTel);
           command.Parameters.AddWithValue("@id", id);
-          connection.Open();
+          command.Parameters.AddWithValue("@isActif", entity.IsActif);
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           command.ExecuteNonQuery();
 
         }

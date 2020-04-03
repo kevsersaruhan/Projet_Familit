@@ -14,5 +14,7 @@ namespace DAL.Utils.ProductUtils
     IEnumerable<T> GetProductByFournisseur(int id);
     IEnumerable<T> GetProductFav(int id);
     IEnumerable<T> GetProductListByCaracteristique(int idcaract);
+    void Desactiver(TKey id);
+    void Activer(TKey id);
   }
 }

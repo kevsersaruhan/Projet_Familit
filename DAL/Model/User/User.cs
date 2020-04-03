@@ -21,5 +21,6 @@ namespace DAL.Model.User
     public string AdPays { get; set; }
     public int NumTel { get; set; }
     public string Email { get; set; }
+    public bool IsActif { get; set; }
   }
 }

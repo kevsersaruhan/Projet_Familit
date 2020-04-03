@@ -79,6 +79,7 @@
     <Folder Include="Functions" />
     <Folder Include="Stored Procedures\SP_Products\SP_Products\SP_Product_Caracteristiques" />
     <Folder Include="Stored Procedures\SP_Users\SP_Client\SP_Product_Fav" />
+    <Folder Include="Views" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Users\Client.sql" />
@@ -161,6 +162,24 @@
     <Build Include="Stored Procedures\SP_Users\SP_Client\SP_Product_Fav\SP_Client_Product_Fav.sql" />
     <Build Include="Stored Procedures\SP_Commandes\SP_Commande_GetCommandeClient.sql" />
     <Build Include="Stored Procedures\SP_Users\SP_Personnel\SP_Personnel_GetByShowroom.sql" />
+    <Build Include="Stored Procedures\SP_Repertoire\SP_Adresse_GetAllById.sql" />
+    <Build Include="Stored Procedures\SP_Etablissement\SP_Showroom_Activer.sql" />
+    <Build Include="Stored Procedures\SP_Etablissement\SP_Showroom_Desactiver.sql" />
+    <Build Include="Stored Procedures\SP_Products\SP_Products\SP_Product_Activer.sql" />
+    <Build Include="Stored Procedures\SP_Products\SP_Products\SP_Product_Desactiver.sql" />
+    <Build Include="Stored Procedures\SP_Products\SP_Categories\SP_Categorie_Activer.sql" />
+    <Build Include="Stored Procedures\SP_Products\SP_Categories\SP_Categorie_Desactiver.sql" />
+    <Build Include="Stored Procedures\SP_Users\SP_Personnel\SP_Personnel_Actvier.sql" />
+    <Build Include="Stored Procedures\SP_Users\SP_Personnel\SP_Personnel_Desactvier.sql" />
+    <Build Include="Stored Procedures\SP_Users\SP_Client\SP_Client_Activer.sql" />
+    <Build Include="Stored Procedures\SP_Users\SP_Client\SP_Client_Desactiver.sql" />
+    <Build Include="Views\PersonnelShowroom.sql" />
+    <Build Include="Views\ShowroomAdresse.sql" />
+    <Build Include="Views\ClientAdresse.sql" />
+    <Build Include="Views\CaracteristiqueView.sql" />
+    <Build Include="Views\ProduitCategorie.sql" />
+    <Build Include="Views\CommandeShowroom.sql" />
+    <Build Include="Views\LigneDeCommandeProduct.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BDD Familit.refactorlog" />

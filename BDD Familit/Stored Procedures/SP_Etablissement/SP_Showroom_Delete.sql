@@ -5,5 +5,3 @@ AS
  SELECT @AdresseId = AdresseId FROM Showroom Where Id = @id
  EXEC [dbo].[SP_Adresse_Delete] @AdresseId
  DELETE FROM Showroom WHere Id = @id
-  
-RETURN 0

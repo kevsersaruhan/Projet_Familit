@@ -13,13 +13,6 @@ namespace DAL.Model.Product
     public string Details { get; set; }
     public Categories Categorie { get; set; }
     public IEnumerable<Products> ListeProduits { get; set; }
-    private int _CatId;
-
-    public int CatId
-    {
-      get { return _CatId; }
-      set { _CatId = Categorie.ID; }
-    }
-
+    public int CatID { get; set; }
   }
 }

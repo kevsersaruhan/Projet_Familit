@@ -14,8 +14,7 @@ namespace DAL.Repository.ProductsRepository
   public class CaracteristiqueRepository : ICaracteristiqueRepository<int, Caracteristique>
   {
     private string _constring = ConfigurationManager.ConnectionStrings["BDD_Familit"].ConnectionString;
-    CategorieRepository catRepo = new CategorieRepository();
-    CaracteristiqueRepository caractRepo = new CaracteristiqueRepository();
+   
     public void Add(Caracteristique entity)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -27,7 +26,10 @@ namespace DAL.Repository.ProductsRepository
           command.Parameters.AddWithValue("@Nom", entity.Nom);
           command.Parameters.AddWithValue("@Details", entity.Details);
           command.Parameters.AddWithValue("@dCategorie", entity.CatId);
-          connection.Open();
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           entity.Id = (int)command.ExecuteScalar();
 
         }
@@ -43,7 +45,10 @@ namespace DAL.Repository.ProductsRepository
           command.CommandType = CommandType.StoredProcedure;
           command.CommandText = "SP_Caracteristique_Delete";
           command.Parameters.AddWithValue("@id", id);
-          connection.Open();
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           command.ExecuteNonQuery();
         }
       }
@@ -57,7 +62,10 @@ namespace DAL.Repository.ProductsRepository
         {
           command.CommandType = CommandType.StoredProcedure;
           command.CommandText = "SP_Caracteristique_GetAll";
-          connection.Open();
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           using (SqlDataReader reader = command.ExecuteReader())
           {
             while (reader.Read())
@@ -68,7 +76,13 @@ namespace DAL.Repository.ProductsRepository
                 Nom = (string)reader["Nom"],
                 Details = (string)reader["Details"],
                 CatId = (int)reader["CategorieId"],
-                Categorie = catRepo.Get((int)reader["CategorieId"])
+                Categorie = new Categories
+                {
+                  ID=(int)reader["CatID"],
+                  Nom=(string)reader["CatNom"],
+                  Details=(string)reader["CatDetails"],
+                  IsActif=(bool)reader["IsActif"]
+                }
               };
             }
           }
@@ -85,7 +99,10 @@ namespace DAL.Repository.ProductsRepository
           command.CommandType = CommandType.StoredProcedure;
           command.CommandText = "SP_Caracteristique_GetById";
           command.Parameters.AddWithValue("@id", id);
-          connection.Open();
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           using (SqlDataReader reader = command.ExecuteReader())
           {
             if (reader.Read())
@@ -96,7 +113,13 @@ namespace DAL.Repository.ProductsRepository
                 Nom = (string)reader["Nom"],
                 Details = (string)reader["Details"],
                 CatId = (int)reader["CategorieId"],
-                Categorie = catRepo.Get((int)reader["CategorieId"])
+                Categorie = new Categories
+                {
+                  ID = (int)reader["CatID"],
+                  Nom = (string)reader["CatNom"],
+                  Details = (string)reader["CatDetails"],
+                  IsActif = (bool)reader["IsActif"]
+                }
               };
          
             }
@@ -119,7 +142,10 @@ namespace DAL.Repository.ProductsRepository
           command.CommandType = CommandType.StoredProcedure;
           command.CommandText = "SP_Caracteristique_GetByCategorie";
           command.Parameters.AddWithValue("@id", idcat);
-          connection.Open();
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           using (SqlDataReader reader = command.ExecuteReader())
           {
             while (reader.Read())
@@ -130,7 +156,13 @@ namespace DAL.Repository.ProductsRepository
                 Nom = (string)reader["Nom"],
                 Details = (string)reader["Details"],
                 CatId = (int)reader["CategorieId"],
-                Categorie = catRepo.Get((int)reader["CategorieId"])
+                Categorie = new Categories
+                {
+                  ID = (int)reader["CatID"],
+                  Nom = (string)reader["CatNom"],
+                  Details = (string)reader["CatDetails"],
+                  IsActif = (bool)reader["IsActif"]
+                }
               };
             }
           }
@@ -140,7 +172,6 @@ namespace DAL.Repository.ProductsRepository
 
     public IEnumerable<Caracteristique> GetCaracteristiqueByProduct(int idproduct)
     {
-      List<Caracteristique> ListeCaracteristiqueProduit = new List<Caracteristique>();
       using (SqlConnection connection = new SqlConnection(_constring))
       {
         using (SqlCommand command = connection.CreateCommand())
@@ -148,18 +179,30 @@ namespace DAL.Repository.ProductsRepository
           command.CommandType = CommandType.StoredProcedure;
           command.CommandText = "SP_Product_Caracteristique_GetByProduct";
           command.Parameters.AddWithValue("@idproduct", idproduct);
-          connection.Open();
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           using (SqlDataReader reader = command.ExecuteReader())
           {
             while (reader.Read())
             {
-              Caracteristique c = new Caracteristique();
-              c = caractRepo.Get((int)reader["Id"]);
-              ListeCaracteristiqueProduit.Add(c);
-             
+              yield return new Caracteristique()
+              {
+                Id = (int)reader["Id"],
+                Nom = (string)reader["Nom"],
+                Details = (string)reader["Details"],
+                CatId = (int)reader["CategorieId"],
+                Categorie = new Categories
+                {
+                  ID = (int)reader["CatID"],
+                  Nom = (string)reader["CatNom"],
+                  Details = (string)reader["CatDetails"],
+                  IsActif = (bool)reader["IsActif"]
+                }
+              };
             }
-            return ListeCaracteristiqueProduit;
-          } 
+          }
         }
       }
     }
@@ -175,7 +218,10 @@ namespace DAL.Repository.ProductsRepository
           command.Parameters.AddWithValue("@nom", entity.Nom);
           command.Parameters.AddWithValue("@details", entity.Details);
           command.Parameters.AddWithValue("@categorieId", entity.CatId);
-          connection.Open();
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           command.ExecuteNonQuery();
         }
       }

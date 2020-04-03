@@ -7,10 +7,11 @@ CREATE PROCEDURE [dbo].[SP_Product_Update]
   @nbPiece int,
   @details NTEXT,
   @catId int,
-  @clientId int
+  @clientId int,
+  @isActif bit
 AS
 	UPDATE [Product] SET [Nom] = @nom, [Prix]= @prix, [PrixDAchatHTVA]=@prixDAchatHTVA,[TVA]=@TVA,[NbPiece]=@nbPiece,[Details]=@details,
-  [CategorieId]=@catId,[ClientId]=@clientId
+  [CategorieId]=@catId,[ClientId]=@clientId,[IsActif]=@isActif
   WHERE Id = @id
 
 RETURN 0

@@ -17,14 +17,15 @@ CREATE PROCEDURE [dbo].[SP_Personnel_Add]
   @adVille NVARCHAR(60),
   @adPays NVARCHAR(60),
   @email NVARCHAR(60),
-  @numTel int
+  @numTel int,
+  @isActif bit
 AS
 	DECLARE @AdresseId int
-  EXEC @AdresseId = SP_Adresse_Add @adRue,@adNum,@adCp,@adVille,@adPays,@email,@numTel
+  EXEC @AdresseId = SP_Adresse_Add @adRue,@adNum,@adCp,@adVille,@adPays,@email,@numTel,@isActif
   INSERT INTO Personnel
-  ([Nom],[Prenom],[DateDeNaissance],[Login],[Password], [Fonction], [IsAdmin], [DateDEngagement], [NbJourAbsence], [NbJourVacances], [Salaire], [AdresseId],[ShowroomId])
+  ([Nom],[Prenom],[DateDeNaissance],[Login],[Password], [Fonction], [IsAdmin], [DateDEngagement], [NbJourAbsence], [NbJourVacances], [Salaire], [AdresseId],[ShowroomId],[IsActif])
   OUTPUT inserted.Id
-  VALUES (@nom,@Prenom,@dateDeNaissance,@Login,[dbo].SF_HashPassword(@Password),@IsAdmin,@DateDengagement,@NbJourAbsence, @NbJourVacances, @Salaire,@AdresseId,@ShowroomId)
-RETURN 0
+  VALUES (@nom,@Prenom,@dateDeNaissance,@Login,[dbo].SF_HashPassword(@Password),@Function,@IsAdmin,@DateDengagement,@NbJourAbsence, @NbJourVacances, @Salaire,@AdresseId,@ShowroomId,@isActif)
+
 
 

@@ -26,6 +26,7 @@ namespace DAL.Model.Product
     public string Details { get; set; }
     public int ClientId { get; set; }
     public int CatId { get; set; }
+    public bool IsActif { get; set; }
 
   }
 }

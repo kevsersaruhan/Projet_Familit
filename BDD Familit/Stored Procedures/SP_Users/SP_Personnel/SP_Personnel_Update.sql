@@ -19,14 +19,15 @@ CREATE PROCEDURE [dbo].[SP_Personnel_Update]
   @adPays NVARCHAR(60),
   @email NVARCHAR(60),
   @numTel int,
-  @id int
+  @id int,
+  @IsActif bit
 
 AS
   EXEC [dbo].SP_Adresse_Update @adRue, @adNum, @adCp, @adVille, @adPays,@email, @numTel, @adresseId
 	UPDATE [Personnel] SET [Nom]=@nom,[Prenom]=@Prenom,[DateDeNaissance]=@dateDeNaissance,[Login]=@login,
                          [Password]=[dbo].SF_HashPassword(@Password), [Fonction]=@Function, [IsAdmin]=@IsAdmin,
                          [DateDEngagement]=@DateDengagement,[NbJourAbsence]=@NbJourAbsence, [NbJourVacances]=@NbJourAbsence, [Salaire]=@Salaire,
-                         [AdresseId]=@adresseId,[ShowroomId]=@ShowroomId
+                         [AdresseId]=@adresseId,[ShowroomId]=@ShowroomId,[IsActif]=@IsActif
                      WHERE Id =@id
-RETURN 0
+
 

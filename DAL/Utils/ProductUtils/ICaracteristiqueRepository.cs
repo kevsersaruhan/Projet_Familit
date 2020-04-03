@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Utils.ProductUtils
 {
-  interface ICaracteristiqueRepository<TKey, T> : IRepository<TKey, T> where T : class
+  public interface ICaracteristiqueRepository<TKey, T> : IRepository<TKey, T> where T : class
   {
     IEnumerable<T> GetCaracteristiqueByCategorie(int idcat);
     IEnumerable<T> GetCaracteristiqueByProduct(int idproduct);

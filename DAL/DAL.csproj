@@ -45,7 +45,6 @@
     <Compile Include="Model\Commande\CommandeClients.cs" />
     <Compile Include="Model\Commande\Commandes.cs" />
     <Compile Include="Model\Commande\LigneDeCommande.cs" />
-    <Compile Include="Model\Commande\CommandeFournisseur.cs" />
     <Compile Include="Model\Product\Caracteristique.cs" />
     <Compile Include="Model\Product\Categories.cs" />
     <Compile Include="Model\Product\Products.cs" />
@@ -55,6 +54,7 @@
     <Compile Include="Model\User\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\CommandesRepository\CommandeClientRepository.cs" />
+    <Compile Include="Repository\CommandesRepository\CommandeRepository.cs" />
     <Compile Include="Repository\CommandesRepository\LignesDeCommandeRepository\LigneDeCommandeRepository.cs" />
     <Compile Include="Utils\EtablissementUtils\IShowroomRepository.cs" />
     <Compile Include="Repository\EtablissementRepository\ShowroomRepository.cs" />

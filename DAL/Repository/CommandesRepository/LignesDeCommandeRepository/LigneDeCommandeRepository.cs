@@ -1,4 +1,6 @@
 using DAL.Model.Commande;
+using DAL.Model.Product;
+using DAL.Model.User;
 using DAL.Repository.ProductsRepository;
 using DAL.Utils;
 using System;
@@ -15,7 +17,7 @@ namespace DAL.Repository.CommandesRepository.LignesDeCommandeRepository
   public class LigneDeCommandeRepository : IRepository<int, LigneDeCommande>
   {
     private string _constring = ConfigurationManager.ConnectionStrings["BDD_Familit"].ConnectionString;
-    ProductRepository prodRepo = new ProductRepository();
+
     public void Add(LigneDeCommande entity)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -31,7 +33,10 @@ namespace DAL.Repository.CommandesRepository.LignesDeCommandeRepository
           command.Parameters.AddWithValue("@ProductID", entity.Product.ID);
           command.Parameters.AddWithValue("@CommandeId", entity.IDCommande);
           command.Parameters.AddWithValue("@productName", entity.Product.Nom);
-          connection.Open();
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           entity.ID = (int)command.ExecuteScalar();
         }
       }
@@ -46,7 +51,10 @@ namespace DAL.Repository.CommandesRepository.LignesDeCommandeRepository
           command.CommandType = CommandType.StoredProcedure;
           command.CommandText = "SP_LignesDeCommande_Delete";
           command.Parameters.AddWithValue("@id", id);
-          connection.Open();
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           command.ExecuteNonQuery();
         }
       }
@@ -60,7 +68,10 @@ namespace DAL.Repository.CommandesRepository.LignesDeCommandeRepository
         {
           command.CommandType = CommandType.StoredProcedure;
           command.CommandText = "SP_LignesDeCommande_GetAll";
-          connection.Open();
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           using (SqlDataReader reader = command.ExecuteReader())
           {
             while (reader.Read())
@@ -68,12 +79,49 @@ namespace DAL.Repository.CommandesRepository.LignesDeCommandeRepository
               yield return new LigneDeCommande()
               {
                 ID = (int)reader["Id"],
-                TOTAL=(double)reader["Total"],
-                HTVA=(double)reader["HTVA"],
-                TVAC=(double)reader["TVAC"],
-                Quantite=(int)reader["Quantite"],
-                IDCommande=(int)reader["CommandeId"],
-                Product=prodRepo.Get((int)reader["ProductId"])
+                TOTAL = (double)reader["Total"],
+                HTVA = (double)reader["HTVA"],
+                TVAC = (double)reader["TVAC"],
+                Quantite = (int)reader["Quantite"],
+                IDCommande = (int)reader["CommandeId"],
+                ProductName = (string)reader["ProductName"],
+                ProductID = (int)reader["LigneProductID"],
+                Product = new Products()
+                {
+                  ID = (int)reader["ProductID"],
+                  Nom = (string)reader["Nom"],
+                  Prix = (double)reader["Prix"],
+                  PrixDAchatTHTVA = (double)reader["PrixDAchatHTVA"],
+                  TVA = (double)reader["TVA"],
+                  NbPiece = (int)reader["NbPiece"],
+                  Details = (string)reader["Details"],
+                  CatId = (int)reader["CategorieId"],
+                  ClientId = (int)reader["ClientId"],
+                  Fournisseur = new Client
+                  {
+                    ID = (int)reader["FournisseurID"],
+                    Nom = (string)reader["FournisseurNom"],
+                    Prenom = (string)reader["Prenom"],
+                    Login = (string)reader["Login"],
+                    NumBCE = (string)reader["NumBCE"],
+                    EstFournisseur = (bool)reader["EstFournisseur"],
+                    AdRue = (string)reader["AdRue"],
+                    AdNum = (string)reader["AdNum"],
+                    AdCP = (int)reader["AdCp"],
+                    AdVille = (string)reader["AdVille"],
+                    AdPays = (string)reader["AdPays"],
+                    NumTel = (int)reader["NumTel"],
+                    Email = (string)reader["EMail"],
+                    IsActif = (bool)reader["ClientIsActif"]
+                  },
+                  Categorie = new Categories
+                  {
+                    ID = (int)reader["CatID"],
+                    Nom = (string)reader["CatNom"],
+                    Details = (string)reader["CatDetails"],
+                    IsActif = (bool)reader["CatIsActif"]
+                  }
+                }
               };
             }
           }
@@ -90,7 +138,10 @@ namespace DAL.Repository.CommandesRepository.LignesDeCommandeRepository
           command.CommandType = CommandType.StoredProcedure;
           command.CommandText = "SP_LignesDeCommande_GetByID";
           command.Parameters.AddWithValue("@id", id);
-          connection.Open();
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           using (SqlDataReader reader = command.ExecuteReader())
           {
             if (reader.Read())
@@ -103,7 +154,44 @@ namespace DAL.Repository.CommandesRepository.LignesDeCommandeRepository
                 TVAC = (double)reader["TVAC"],
                 Quantite = (int)reader["Quantite"],
                 IDCommande = (int)reader["CommandeId"],
-                Product = prodRepo.Get((int)reader["ProductId"])
+                ProductName = (string)reader["ProductName"],
+                ProductID = (int)reader["LigneProductID"],
+                Product = new Products()
+                {
+                  ID = (int)reader["ProductID"],
+                  Nom = (string)reader["Nom"],
+                  Prix = (double)reader["Prix"],
+                  PrixDAchatTHTVA = (double)reader["PrixDAchatHTVA"],
+                  TVA = (double)reader["TVA"],
+                  NbPiece = (int)reader["NbPiece"],
+                  Details = (string)reader["Details"],
+                  CatId = (int)reader["CategorieId"],
+                  ClientId = (int)reader["ClientId"],
+                  Fournisseur = new Client
+                  {
+                    ID = (int)reader["FournisseurID"],
+                    Nom = (string)reader["FournisseurNom"],
+                    Prenom = (string)reader["Prenom"],
+                    Login = (string)reader["Login"],
+                    NumBCE = (string)reader["NumBCE"],
+                    EstFournisseur = (bool)reader["EstFournisseur"],
+                    AdRue = (string)reader["AdRue"],
+                    AdNum = (string)reader["AdNum"],
+                    AdCP = (int)reader["AdCp"],
+                    AdVille = (string)reader["AdVille"],
+                    AdPays = (string)reader["AdPays"],
+                    NumTel = (int)reader["NumTel"],
+                    Email = (string)reader["EMail"],
+                    IsActif = (bool)reader["ClientIsActif"]
+                  },
+                  Categorie = new Categories
+                  {
+                    ID = (int)reader["CatID"],
+                    Nom = (string)reader["CatNom"],
+                    Details = (string)reader["CatDetails"],
+                    IsActif = (bool)reader["CatIsActif"]
+                  }
+                }
               };
 
             }
@@ -126,7 +214,10 @@ namespace DAL.Repository.CommandesRepository.LignesDeCommandeRepository
           command.CommandType = CommandType.StoredProcedure;
           command.CommandText = "SP_LignesDeCommande_GetByCommande";
           command.Parameters.AddWithValue("@idCommande", idCommande);
-          connection.Open();
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           using (SqlDataReader reader = command.ExecuteReader())
           {
             while (reader.Read())
@@ -139,13 +230,50 @@ namespace DAL.Repository.CommandesRepository.LignesDeCommandeRepository
                 TVAC = (double)reader["TVAC"],
                 Quantite = (int)reader["Quantite"],
                 IDCommande = (int)reader["CommandeId"],
-                Product = prodRepo.Get((int)reader["ProductId"])
-              };
+                ProductName=(string)reader["ProductName"],
+                ProductID=(int)reader["LigneProductID"],
+                Product = new Products()
+                {
+                  ID = (int)reader["ProductID"],
+                  Nom = (string)reader["Nom"],
+                  Prix = (double)reader["Prix"],
+                  PrixDAchatTHTVA = (double)reader["PrixDAchatHTVA"],
+                  TVA = (double)reader["TVA"],
+                  NbPiece = (int)reader["NbPiece"],
+                  Details = (string)reader["Details"],
+                  CatId = (int)reader["CategorieId"],
+                  ClientId = (int)reader["ClientId"],
+                  Fournisseur = new Client
+                  {
+                    ID = (int)reader["FournisseurID"],
+                    Nom = (string)reader["FournisseurNom"],
+                    Prenom = (string)reader["Prenom"],
+                    Login = (string)reader["Login"],
+                    NumBCE = (string)reader["NumBCE"],
+                    EstFournisseur = (bool)reader["EstFournisseur"],
+                    AdRue = (string)reader["AdRue"],
+                    AdNum = (string)reader["AdNum"],
+                    AdCP = (int)reader["AdCp"],
+                    AdVille = (string)reader["AdVille"],
+                    AdPays = (string)reader["AdPays"],
+                    NumTel = (int)reader["NumTel"],
+                    Email = (string)reader["EMail"],
+                    IsActif = (bool)reader["ClientIsActif"]
+                  },
+                  Categorie = new Categories
+                  {
+                    ID = (int)reader["CatID"],
+                    Nom = (string)reader["CatNom"],
+                    Details = (string)reader["CatDetails"],
+                    IsActif = (bool)reader["CatIsActif"]
+                  }
+                }
+               };
+              }
             }
           }
         }
-      }
-    }
+       }
     public IEnumerable<LigneDeCommande> GetByProductId(int idProduct)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -155,7 +283,10 @@ namespace DAL.Repository.CommandesRepository.LignesDeCommandeRepository
           command.CommandType = CommandType.StoredProcedure;
           command.CommandText = "SP_LignesDeCommande_GetByProduct";
           command.Parameters.AddWithValue("@idProduct", idProduct);
-          connection.Open();
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           using (SqlDataReader reader = command.ExecuteReader())
           {
             while (reader.Read())
@@ -168,7 +299,44 @@ namespace DAL.Repository.CommandesRepository.LignesDeCommandeRepository
                 TVAC = (double)reader["TVAC"],
                 Quantite = (int)reader["Quantite"],
                 IDCommande = (int)reader["CommandeId"],
-                Product = prodRepo.Get((int)reader["ProductId"])
+                ProductName = (string)reader["ProductName"],
+                ProductID = (int)reader["LigneProductID"],
+                Product = new Products()
+                {
+                  ID = (int)reader["ProductID"],
+                  Nom = (string)reader["Nom"],
+                  Prix = (double)reader["Prix"],
+                  PrixDAchatTHTVA = (double)reader["PrixDAchatHTVA"],
+                  TVA = (double)reader["TVA"],
+                  NbPiece = (int)reader["NbPiece"],
+                  Details = (string)reader["Details"],
+                  CatId = (int)reader["CategorieId"],
+                  ClientId = (int)reader["ClientId"],
+                  Fournisseur = new Client
+                  {
+                    ID = (int)reader["FournisseurID"],
+                    Nom = (string)reader["FournisseurNom"],
+                    Prenom = (string)reader["Prenom"],
+                    Login = (string)reader["Login"],
+                    NumBCE = (string)reader["NumBCE"],
+                    EstFournisseur = (bool)reader["EstFournisseur"],
+                    AdRue = (string)reader["AdRue"],
+                    AdNum = (string)reader["AdNum"],
+                    AdCP = (int)reader["AdCp"],
+                    AdVille = (string)reader["AdVille"],
+                    AdPays = (string)reader["AdPays"],
+                    NumTel = (int)reader["NumTel"],
+                    Email = (string)reader["EMail"],
+                    IsActif = (bool)reader["ClientIsActif"]
+                  },
+                  Categorie = new Categories
+                  {
+                    ID = (int)reader["CatID"],
+                    Nom = (string)reader["CatNom"],
+                    Details = (string)reader["CatDetails"],
+                    IsActif = (bool)reader["CatIsActif"]
+                  }
+                }
               };
             }
           }
@@ -190,7 +358,10 @@ namespace DAL.Repository.CommandesRepository.LignesDeCommandeRepository
           command.Parameters.AddWithValue("@ProductID", entity.Product.ID);
           command.Parameters.AddWithValue("@CommandeId", entity.IDCommande);
           command.Parameters.AddWithValue("@productName", entity.Product.Nom);
-          connection.Open();
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           command.ExecuteNonQuery();
         }
       }

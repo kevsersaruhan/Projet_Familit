@@ -16,5 +16,6 @@ namespace DAL.Model.Product
     public string Nom { get; set; }
     public string Details { get; set; }
     public IEnumerable<Caracteristique> ListeCaracteristique { get; set; }
+    public bool IsActif { get; set; }
   }
 }

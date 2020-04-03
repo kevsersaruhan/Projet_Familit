@@ -14,7 +14,25 @@ namespace DAL.Repository.ProductsRepository
   public class CategorieRepository : ICategorieRepository<int, Categories>
   {
     private string _constring = ConfigurationManager.ConnectionStrings["BDD_Familit"].ConnectionString;
-    CaracteristiqueRepository caracRepo = new CaracteristiqueRepository();
+
+
+    public void Activer(int id)
+    {
+      using (SqlConnection connection = new SqlConnection(_constring))
+      {
+        using (SqlCommand command = connection.CreateCommand())
+        {
+          command.CommandType = CommandType.StoredProcedure;
+          command.CommandText = "SP_Categorie_Activer";
+          command.Parameters.AddWithValue("@id", id);
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
+          command.ExecuteNonQuery();
+        }
+      }
+    }
     public void Add(Categories entity)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -25,13 +43,16 @@ namespace DAL.Repository.ProductsRepository
           command.CommandText = "SP_Categorie_Add";
           command.Parameters.AddWithValue("@Nom", entity.Nom);
           command.Parameters.AddWithValue("@Details", entity.Details);
-          connection.Open();
+          command.Parameters.AddWithValue("@isActif", entity.IsActif);
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           entity.ID = (int)command.ExecuteScalar();
 
         }
       }
     }
-
     public void Delete(int id)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -41,12 +62,31 @@ namespace DAL.Repository.ProductsRepository
           command.CommandType = CommandType.StoredProcedure;
           command.CommandText = "SP_Categorie_Delete";
           command.Parameters.AddWithValue("@id", id);
-          connection.Open();
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           command.ExecuteNonQuery();
         }
       }
     }
-
+    public void Desactiver(int id)
+    {
+      using (SqlConnection connection = new SqlConnection(_constring))
+      {
+        using (SqlCommand command = connection.CreateCommand())
+        {
+          command.CommandType = CommandType.StoredProcedure;
+          command.CommandText = "SP_Categorie_Desactiver";
+          command.Parameters.AddWithValue("@id", id);
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
+          command.ExecuteNonQuery();
+        }
+      }
+    }
     public IEnumerable<Categories> Get()
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -55,7 +95,10 @@ namespace DAL.Repository.ProductsRepository
         {
           command.CommandType = CommandType.StoredProcedure;
           command.CommandText = "SP_Categorie_GetAll";
-          connection.Open();
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           using (SqlDataReader reader = command.ExecuteReader())
           {
             while (reader.Read())
@@ -65,14 +108,13 @@ namespace DAL.Repository.ProductsRepository
                 ID = (int)reader["Id"],
                 Nom = (string)reader["Nom"],
                 Details = (string)reader["Details"],
-                ListeCaracteristique = caracRepo.GetCaracteristiqueByCategorie((int)reader["Id"])
+                IsActif = (bool)reader["IsActif"]    
               };
             }
           }
         }
       }
     }
-
     public Categories Get(int id)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -82,7 +124,10 @@ namespace DAL.Repository.ProductsRepository
           command.CommandType = CommandType.StoredProcedure;
           command.CommandText = "SP_Categorie_GetById";
           command.Parameters.AddWithValue("@id", id);
-          connection.Open();
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           using (SqlDataReader reader = command.ExecuteReader())
           {
             if (reader.Read())
@@ -92,7 +137,7 @@ namespace DAL.Repository.ProductsRepository
                 ID = (int)reader["Id"],
                 Nom = (string)reader["Nom"],
                 Details = (string)reader["Details"],
-                ListeCaracteristique = caracRepo.GetCaracteristiqueByCategorie((int)reader["Id"])
+                IsActif = (bool)reader["IsActif"]
               };
 
             }
@@ -104,7 +149,6 @@ namespace DAL.Repository.ProductsRepository
         }
       }
     }
-
     public IEnumerable<Categories> GetCategorieByName(string s)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -114,7 +158,10 @@ namespace DAL.Repository.ProductsRepository
           command.CommandType = CommandType.StoredProcedure;
           command.CommandText = "SP_Categorie_GetByName";
           command.Parameters.AddWithValue("@nom", s);
-          connection.Open();
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           using (SqlDataReader reader = command.ExecuteReader())
           {
             while (reader.Read())
@@ -124,14 +171,13 @@ namespace DAL.Repository.ProductsRepository
                 ID = (int)reader["Id"],
                 Nom = (string)reader["Nom"],
                 Details = (string)reader["Details"],
-                ListeCaracteristique = caracRepo.GetCaracteristiqueByCategorie((int)reader["Id"])
+                IsActif = (bool)reader["IsActif"]
               };
             }
           }
         }
       }
     }
-
     public void Update(int id, Categories entity)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -142,11 +188,15 @@ namespace DAL.Repository.ProductsRepository
           command.CommandText = "SP_Caracteristique_Update";
           command.Parameters.AddWithValue("@nom", entity.Nom);
           command.Parameters.AddWithValue("@details", entity.Details);
-          connection.Open();
+          command.Parameters.AddWithValue("@isActif", entity.IsActif);
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
           command.ExecuteNonQuery();
         }
       }
     }
   }
-  }
+}
 

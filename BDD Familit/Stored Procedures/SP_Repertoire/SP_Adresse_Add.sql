@@ -8,6 +8,7 @@ CREATE PROCEDURE [dbo].[SP_Adresse_Add]
   @numTel int
 AS
 	INSERT  INTO Adresse ([AdRue],[AdNum],[AdCp],[AdVille],[AdPays],[NumTel],[EMail])
+  OUTPUT inserted.Id
   VALUES (@adRue,@adNum,@adCp,@adVille,@adPays,@numTel,@email)
   DECLARE @AdresseId int = SCOPE_IDENTITY()
 RETURN @AdresseId

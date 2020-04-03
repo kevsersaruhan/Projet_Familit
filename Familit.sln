@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiteFamilit", "SiteFamilit\
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "BDD_Familit", "BDD Familit\BDD_Familit.sqlproj", "{CD9B8C71-7214-4BA7-9CFF-4D3474FC9D3B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL_API", "DAL_API\DAL_API.csproj", "{3FFD354A-A5B5-431D-9F5C-BF6FB74A16C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{CD9B8C71-7214-4BA7-9CFF-4D3474FC9D3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD9B8C71-7214-4BA7-9CFF-4D3474FC9D3B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CD9B8C71-7214-4BA7-9CFF-4D3474FC9D3B}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{3FFD354A-A5B5-431D-9F5C-BF6FB74A16C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FFD354A-A5B5-431D-9F5C-BF6FB74A16C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FFD354A-A5B5-431D-9F5C-BF6FB74A16C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FFD354A-A5B5-431D-9F5C-BF6FB74A16C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
