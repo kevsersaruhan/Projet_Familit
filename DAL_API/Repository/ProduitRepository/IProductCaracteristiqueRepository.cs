@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace DAL_API.Repository.ProduitRepository
 {
-  interface IProductCaracteristiqueRepository
+  public interface IProductCaracteristiqueRepository
   {
+    void AddCaracteristiqueToProduct(int idCaract, int idProduct);
+    void DeleteCaracteristiqueFromProduct(int idCaract, int idProduct);
   }
 }

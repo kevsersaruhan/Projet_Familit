@@ -157,7 +157,7 @@
     <Build Include="Stored Procedures\SP_Products\SP_Products\SP_Product_Caracteristiques\SP_Product_Caracteristique_GetAll.sql" />
     <Build Include="Stored Procedures\SP_Users\SP_Client\SP_Product_Fav\SP_Client_Product_Add.sql" />
     <Build Include="Stored Procedures\SP_Users\SP_Client\SP_Product_Fav\SP_Client_Product_Delete.sql" />
-    <Build Include="Stored Procedures\SP_Products\SP_Products\SP_Product_Caracteristiques\SP_Product_Caracteristique_GetByCaracteristique.sql" />
+    <Build Include="Stored Procedures\SP_Products\SP_Products\SP_Product_Caracteristiques\SP_Product_Caracteristique_GetByCaract.sql" />
     <Build Include="Stored Procedures\SP_Products\SP_Products\SP_Product_Caracteristiques\SP_Product_Caracteristique_GetByProduct.sql" />
     <Build Include="Stored Procedures\SP_Users\SP_Client\SP_Product_Fav\SP_Client_Product_Fav.sql" />
     <Build Include="Stored Procedures\SP_Commandes\SP_Commande_GetCommandeClient.sql" />

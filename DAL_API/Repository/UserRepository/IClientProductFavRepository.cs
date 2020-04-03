@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace DAL_API.Repository.UserRepository
 {
-  interface IClientProductFavRepository
+  public interface IClientProductFavRepository
   {
+    void AddProductToFav(int idProduct, int idClient);
+    void DeleteProductFav(int id);
   }
 }
