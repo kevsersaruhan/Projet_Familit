@@ -35,12 +35,13 @@
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -66,17 +67,22 @@
     <Compile Include="Repository\UserRepository\IPersonnelRepository.cs" />
     <Compile Include="Services\CaracteristiqueRepository.cs" />
     <Compile Include="Services\CategorieRepository.cs" />
-    <Compile Include="Services\ClientProductRepository.cs" />
     <Compile Include="Services\ClientRepository.cs" />
     <Compile Include="Services\CommandeClientRepository.cs" />
     <Compile Include="Services\CommandeRepository.cs" />
+    <Compile Include="Services\Helper.cs" />
     <Compile Include="Services\LigneDeCommandeRepository.cs" />
     <Compile Include="Services\PersonnelRepository.cs" />
     <Compile Include="Services\ProductCaracteristiqueRepository.cs" />
     <Compile Include="Services\ProductRepository.cs" />
     <Compile Include="Services\ShowroomRepository.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{95427525-FF57-45E7-9999-1A9527743279}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

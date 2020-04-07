@@ -10,54 +10,68 @@ namespace DAL_API.Services
 {
   public class ClientRepository : IClientRepository<int, Client>
   {
-    public void Activer(int id)
+    Helper h = new Helper();
+    public bool Activer(int id, Client entity)
+    {
+      return h.PutBool(id, entity, "Secure/Client/" + id + "/Activer");
+    }
+
+    public Client Add(Client entity)
+    {
+      return h.PostAsyncObject(entity, "Secure/Client");
+    }
+
+    public bool ChangePassword(int id, string password, Client entity)
+    {
+      return h.PutBool("Secure/Client/" + id + "/ChangePassword/" + password);
+    }
+
+    public bool CheckClient(int id, string login, string password,Client entity)
     {
       throw new NotImplementedException();
     }
 
-    public void Add(Client entity)
+    public void Delete(int id, Client entity)
     {
-      throw new NotImplementedException();
+      h.DeleteAsync(id, entity, "Secure/Client/" + id);
     }
 
-    public void ChangePassword(int id, string password)
+    public bool Desactiver(int id, Client entity)
     {
-      throw new NotImplementedException();
-    }
-
-    public void CheckClient(int id, string login, string password)
-    {
-      throw new NotImplementedException();
-    }
-
-    public void Delete(int id)
-    {
-      throw new NotImplementedException();
-    }
-
-    public void Desactiver(int id)
-    {
-      throw new NotImplementedException();
+      return h.PutBool(id, entity, "Secure/Client/" + id + "/Desactiver");
     }
 
     public IEnumerable<Client> Get()
     {
-      throw new NotImplementedException();
+      return h.GetAsyncList<Client>("Client");
     }
 
     public Client Get(int id)
     {
-      throw new NotImplementedException();
+      return h.GetAsync<Client>("Client/" + id);
     }
-
     public IEnumerable<Client> GetByName(string name)
     {
-      throw new NotImplementedException();
+      return h.GetAsyncList<Client>("Client / " + name + " / GetByName");
     }
 
-    public void Update(int id, Client entity)
+    public bool Update(int id, Client entity)
     {
-      throw new NotImplementedException();
+      return h.PutBool(id, entity, "Secure/Client/" + id);
+    }
+
+    public Client UpdateAndGet(int id, Client entity)
+    {
+      if (this.Update(id, entity)) return this.Get(id);
+      return entity;
+    }
+    public bool AddProductToFav(int idProduct, int idClient)
+    {
+      return h.PutBool("Secure/ClientProduct/" + idClient + "/" + idProduct + "/Add");
+    }
+    public void DeleteProductFav(int id)
+    {
+      h.DeleteAsync("Secure/ClientProduct/" + id + "/Delete");
     }
   }
 }

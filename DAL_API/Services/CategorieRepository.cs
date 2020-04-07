@@ -10,44 +10,50 @@ namespace DAL_API.Services
 {
   public class CategorieRepository : ICategorieRepository<int, Categorie>
   {
-    public void Activer(int id)
+    Helper h = new Helper();
+    public bool Activer(int id, Categorie entity)
     {
-      throw new NotImplementedException();
+      return h.PutBool(id, entity, "Secure/Categorie/" + id + "/Activer");
     }
 
-    public void Add(Categorie entity)
+    public Categorie Add(Categorie entity)
     {
-      throw new NotImplementedException();
+      return h.PostAsyncObject(entity, "Secure/Categorie");
     }
 
-    public void Delete(int id)
+    public void Delete(int id, Categorie entity)
     {
-      throw new NotImplementedException();
+      h.DeleteAsync(id, entity, "Secure/Categorie/" + id);
     }
 
-    public void Desactiver(int id)
+    public bool Desactiver(int id, Categorie entity)
     {
-      throw new NotImplementedException();
+      return h.PutBool(id, entity, "Secure/Categorie/" + id + "/Desactiver");
+
     }
 
     public IEnumerable<Categorie> Get()
     {
-      throw new NotImplementedException();
+      return h.GetAsyncList<Categorie>("Categorie");
     }
 
     public Categorie Get(int id)
     {
-      throw new NotImplementedException();
+      return h.GetAsync<Categorie>("Categorie/" + id);
     }
 
     public IEnumerable<Categorie> GetCategorieByName(string s)
     {
-      throw new NotImplementedException();
+      return h.GetAsyncList<Categorie>("Categorie / " + s + " / GetByName");
     }
-
-    public void Update(int id, Categorie entity)
+    public bool Update(int id, Categorie entity)
     {
-      throw new NotImplementedException();
+      return h.PutBool(id, entity, "Secure/Categorie/" + id);
+    }
+    public Categorie UpdateAndGet(int id, Categorie entity)
+    {
+      if (this.Update(id, entity)) return this.Get(id);
+      return entity;
     }
   }
 }

@@ -10,39 +10,46 @@ namespace DAL_API.Services
 {
   public class CaracteristiqueRepository : ICaracteristiqueRepository<int, Caracteristique>
   {
-    public void Add(Caracteristique entity)
+    Helper h = new Helper();
+    public Caracteristique Add(Caracteristique entity)
     {
-      throw new NotImplementedException();
+      return h.PostAsyncObject(entity, "Secure/Caracteristique");
     }
 
-    public void Delete(int id)
+    public void Delete(int id, Caracteristique entity)
     {
-      throw new NotImplementedException();
+      h.DeleteAsync(id, entity, "Secure/Caracteristique/" + id);
     }
 
-    public IEnumerable<Caracteristique> Get()
+      public IEnumerable<Caracteristique> Get()
     {
-      throw new NotImplementedException();
+      return h.GetAsyncList<Caracteristique>("Showroom");
     }
 
     public Caracteristique Get(int id)
     {
-      throw new NotImplementedException();
+      return h.GetAsync<Caracteristique>("Caracteristique/" + id);
     }
 
     public IEnumerable<Caracteristique> GetCaracteristiqueByCategorie(int idcat)
     {
-      throw new NotImplementedException();
+      return h.GetAsyncList<Caracteristique>("Caracteristique/" + idcat + "/GetByCategorie");
+
     }
 
     public IEnumerable<Caracteristique> GetCaracteristiqueByProduct(int idproduct)
     {
-      throw new NotImplementedException();
-    }
+      return h.GetAsyncList<Caracteristique>("Caracteristique/" + idproduct+ "/GetByProduct");
 
-    public void Update(int id, Caracteristique entity)
+    }
+    public bool Update(int id, Caracteristique entity)
     {
-      throw new NotImplementedException();
+      return h.PutBool(id, entity, "Secure/Caracteristique/" + id);
+    }
+    public Caracteristique UpdateAndGet(int id, Caracteristique entity)
+    {
+      if (this.Update(id, entity)) return this.Get(id);
+      return entity;
     }
   }
 }

@@ -10,37 +10,35 @@ namespace DAL_API.Services
 {
   public class LigneDeCommandeRepository : IRepository<int, LigneDeCommande>
   {
-    public void Add(LigneDeCommande entity)
+    Helper h = new Helper();
+    public LigneDeCommande Add(LigneDeCommande entity)
     {
-      throw new NotImplementedException();
+      return h.PostAsyncObject(entity, "Secure/LigneDeCommande");
     }
 
-    public void Delete(int id)
+    public void Delete(int id, LigneDeCommande entity)
     {
-      throw new NotImplementedException();
+      h.DeleteAsync(id, entity, "Secure/LigneDeCommande/" + id);
     }
 
     public IEnumerable<LigneDeCommande> Get()
     {
-      throw new NotImplementedException();
+      return h.GetAsyncList<LigneDeCommande>("LigneDeCommande");
     }
 
     public LigneDeCommande Get(int id)
     {
-      throw new NotImplementedException();
+      return h.GetAsync<LigneDeCommande>("LigneDeCommande/" + id);
     }
-    public IEnumerable<LigneDeCommande> GetByCommandeId(int idCommande)
+    public bool Update(int id, LigneDeCommande entity)
     {
-      throw new NotImplementedException();
-    }
-    public IEnumerable<LigneDeCommande> GetByProductId(int idProduct)
-    {
-      throw new NotImplementedException();
+      return h.PutBool(id, entity, "Secure/LigneDeCommande/" + id);
     }
 
-    public void Update(int id, LigneDeCommande entity)
+    public LigneDeCommande UpdateAndGet(int id, LigneDeCommande entity)
     {
-      throw new NotImplementedException();
+      if (this.Update(id, entity)) return this.Get(id);
+      return entity;
     }
   }
 }

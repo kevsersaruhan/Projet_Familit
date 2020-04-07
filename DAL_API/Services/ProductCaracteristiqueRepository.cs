@@ -9,14 +9,15 @@ namespace DAL_API.Services
 {
   public class ProductCaracteristiqueRepository : IProductCaracteristiqueRepository
   {
-    public void AddCaracteristiqueToProduct(int idCaract, int idProduct)
+    Helper h = new Helper();
+    public bool AddCaracteristiqueToProduct(int idCaract, int idProduct)
     {
-      throw new NotImplementedException();
+      return h.PutBool("Secure/CaracteristiqueProduct/" + idCaract + "/" + idProduct + "/Add");
     }
 
     public void DeleteCaracteristiqueFromProduct(int idCaract, int idProduct)
     {
-      throw new NotImplementedException();
+      h.DeleteAsync("Secure/CaracteristiqueProduct/" + idCaract + "/" + idProduct + "/Delete");
     }
   }
 }

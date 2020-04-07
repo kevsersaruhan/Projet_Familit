@@ -11,7 +11,7 @@ namespace DAL_API.Repository
     IEnumerable<T> Get();
     T Get(TKey id);
     T Add(T entity);
-    T Update(TKey id, T entity);
+    T UpdateAndGet(TKey id, T entity);
     void Delete(TKey id, T entity);
 
   }

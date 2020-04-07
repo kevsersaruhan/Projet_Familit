@@ -10,33 +10,36 @@ namespace DAL_API.Services
 {
   public class CommandeClientRepository : IRepository<int, CommandeClient>
   {
-    public void Add(CommandeClient entity)
+    Helper h = new Helper();
+    public CommandeClient Add(CommandeClient entity)
     {
-      throw new NotImplementedException();
+      return h.PostAsyncObject(entity, "Secure/CommandeClient");
     }
 
-    public void Delete(int id)
+    public void Delete(int id, CommandeClient entity)
     {
-      throw new NotImplementedException();
+      h.DeleteAsync(id, entity, "Secure/CommandeClient/" + id);
     }
 
     public IEnumerable<CommandeClient> Get()
     {
-      throw new NotImplementedException();
+      return h.GetAsyncList<CommandeClient>("CommandeClient");
     }
 
     public CommandeClient Get(int id)
     {
-      throw new NotImplementedException();
+      return h.GetAsync<CommandeClient>("CommandeClient/" + id);
     }
 
-    public void Update(int id, CommandeClient entity)
+    public bool Update(int id, CommandeClient entity)
     {
-      throw new NotImplementedException();
+      return h.PutBool(id, entity, "Secure/CommandeClient/" + id);
     }
-    public IEnumerable<CommandeClient> GetCommandeClient(int idclient)
+
+    public CommandeClient UpdateAndGet(int id, CommandeClient entity)
     {
-      throw new NotImplementedException();
+      if (this.Update(id, entity)) return this.Get(id);
+      return entity;
     }
   }
 }

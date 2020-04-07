@@ -9,7 +9,7 @@ namespace DAL_API.Repository.ProduitRepository
   public interface ICategorieRepository<TKey, T> : IRepository<TKey, T> where T : class
   {
     IEnumerable<T> GetCategorieByName(string s);
-    void Desactiver(TKey id);
-    void Activer(TKey id);
+    bool Desactiver(TKey id, T entity);
+    bool Activer(TKey id, T entity);
   }
 }

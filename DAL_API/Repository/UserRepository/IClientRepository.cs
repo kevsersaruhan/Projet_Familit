@@ -8,10 +8,10 @@ namespace DAL_API.Repository.UserRepository
 {
   public interface IClientRepository<TKey, T> : IRepository<TKey, T> where T : class
   {
-    void ChangePassword(TKey id, string password);
-    void CheckClient(TKey id, string login, string password);
+    bool ChangePassword(TKey id, string password,T entity);
+    bool CheckClient(TKey id, string login, string password, T entity);
     IEnumerable<T> GetByName(string name);
-    void Desactiver(TKey id);
-    void Activer(TKey id);
+    bool Desactiver(TKey id, T entity);
+    bool Activer(TKey id, T entity);
   }
 }

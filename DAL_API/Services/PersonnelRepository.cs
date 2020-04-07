@@ -13,187 +13,72 @@ namespace DAL_API.Services
 {
   public class PersonnelRepository : IPersonnelRepository<int, Personnel>
   {
-    public Personnel Activer(int id, Personnel entity)
+    public Helper h = new Helper();
+    public bool Activer(int id, Personnel entity)
     {
-      using (HttpClient httpclient = new HttpClient())
-      {
-        httpclient.BaseAddress = new Uri("https://localhost:56503/");
-        httpclient.DefaultRequestHeaders.Accept.Clear();
-        httpclient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-        string jsonContent = JsonConvert.SerializeObject(entity); HttpContent httpContent = new StringContent(jsonContent);
-        httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-        HttpResponseMessage httpResponseMessage = httpclient.PutAsync("Secure/Personnel/" + id + "/Activer", httpContent).Result;
-
-        httpResponseMessage.EnsureSuccessStatusCode(); //si code 200 requete valide
-        string json = httpResponseMessage.Content.ReadAsStringAsync().Result;
-        //parseur de json va retransformer en objet
-        return JsonConvert.DeserializeObject<Personnel>(json);
-      }
+      return h.PutBool(id, entity, "Secure/Personnel/"+id+"/Activer");
     }
 
     public Personnel Add(Personnel entity)
     {
-      using (HttpClient httpclient = new HttpClient())
-      {
-        httpclient.BaseAddress = new Uri("https://localhost:56503/");
-        httpclient.DefaultRequestHeaders.Accept.Clear();
-        httpclient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-        string jsonContent = JsonConvert.SerializeObject(entity);
-        HttpContent httpContent = new StringContent(jsonContent);
-        httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-        HttpResponseMessage httpResponseMessage = httpclient.PostAsync("Secure/Personnel", httpContent).Result;
-        httpResponseMessage.EnsureSuccessStatusCode(); //si code 200 requete valide
-        string json = httpResponseMessage.Content.ReadAsStringAsync().Result;
-        //parseur de json va retransformer en objet
-        return JsonConvert.DeserializeObject<Personnel>(json);
-      }
+      return h.PostAsyncObject(entity, "Secure/Personnel");
     }
 
-    public Personnel ChangePassword(int id, string s, Personnel entity)
+    public bool ChangePassword(int id, string s, Personnel entity)
     {
-      using (HttpClient httpclient = new HttpClient())
-      {
-        httpclient.BaseAddress = new Uri("https://localhost:56503/");
-        httpclient.DefaultRequestHeaders.Accept.Clear();
-        httpclient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-        string jsonContent = JsonConvert.SerializeObject(entity);
-        HttpContent httpContent = new StringContent(jsonContent);
-        httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-        HttpResponseMessage httpResponseMessage = httpclient.PutAsync("Secure/Personnel/"+id+"/ChangePassword/"+s, httpContent).Result;
-
-        httpResponseMessage.EnsureSuccessStatusCode(); //si code 200 requete valide
-        string json = httpResponseMessage.Content.ReadAsStringAsync().Result;
-        //parseur de json va retransformer en objet
-        return JsonConvert.DeserializeObject<Personnel>(json);
-      }
+      return h.PutBool("Secure/Personnel/"+id+"/ChangePassword/"+s);
     }
 
+    //pas encore implémenté
     public void CheckPersonnel(int id, string login, string password, Personnel entity)
     {
-      using (HttpClient httpclient = new HttpClient())
-      {
-        httpclient.BaseAddress = new Uri("https://localhost:56503/");
-        httpclient.DefaultRequestHeaders.Accept.Clear();
-        httpclient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-        string jsonContent = JsonConvert.SerializeObject(entity);
-        HttpContent httpContent = new StringContent(jsonContent);
-        httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-        HttpResponseMessage httpResponseMessage = httpclient.DeleteAsync("Secure/Personnel/{id}/{login}/{password}").Result;
-        httpResponseMessage.EnsureSuccessStatusCode(); //si code 200 requete valide
-      }
+      throw new NotImplementedException();
     }
 
     public void Delete(int id, Personnel entity)
     {
-      using (HttpClient httpclient = new HttpClient())
-      {
-        httpclient.BaseAddress = new Uri("https://localhost:56503/");
-        httpclient.DefaultRequestHeaders.Accept.Clear();
-        httpclient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-        string jsonContent = JsonConvert.SerializeObject(entity);
-        HttpContent httpContent = new StringContent(jsonContent);
-        httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-        HttpResponseMessage httpResponseMessage = httpclient.DeleteAsync("Secure/Personnel/"+id).Result;
-        httpResponseMessage.EnsureSuccessStatusCode(); //si code 200 requete valide
-      }
+      h.DeleteAsync(id, entity, "Secure/Personnel/" + id);
     }
 
-    public Personnel Desactiver(int id, Personnel entity)
+    public bool Desactiver(int id, Personnel entity)
     {
-      using (HttpClient httpclient = new HttpClient())
-      {
-        httpclient.BaseAddress = new Uri("https://localhost:56503/");
-        httpclient.DefaultRequestHeaders.Accept.Clear();
-        httpclient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-        string jsonContent = JsonConvert.SerializeObject(entity);
-        HttpContent httpContent = new StringContent(jsonContent);
-        httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-        HttpResponseMessage httpResponseMessage = httpclient.PutAsync("Secure/Personnel/" + id + "/Desactiver", httpContent).Result;
-        httpResponseMessage.EnsureSuccessStatusCode(); //si code 200 requete valide
-        string json = httpResponseMessage.Content.ReadAsStringAsync().Result;
-        //parseur de json va retransformer en objet
-        return JsonConvert.DeserializeObject<Personnel>(json);
-      }
+      return h.PutBool(id, entity, "Secure/Personnel/" + id + "/Desactiver");
     }
 
-    public Personnel DoAdmin(int id, Personnel entity)
+    public bool DoAdmin(int id, Personnel entity)
     {
-      using (HttpClient httpclient = new HttpClient())
-      {
-        httpclient.BaseAddress = new Uri("https://localhost:56503/");
-        httpclient.DefaultRequestHeaders.Accept.Clear();
-        httpclient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-        string jsonContent = JsonConvert.SerializeObject(entity); HttpContent httpContent = new StringContent(jsonContent);
-        httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-        HttpResponseMessage httpResponseMessage = httpclient.PutAsync("Secure/Personnel/" + id + "/DoAdmin", httpContent).Result;
-
-        httpResponseMessage.EnsureSuccessStatusCode(); //si code 200 requete valide
-        string json = httpResponseMessage.Content.ReadAsStringAsync().Result;
-        //parseur de json va retransformer en objet
-        return JsonConvert.DeserializeObject<Personnel>(json);
-      }
+      return h.PutBool(id, entity, "Secure/Personnel/" + id + "/DoAdmin");
     }
 
     public IEnumerable<Personnel> Get()
     {
-      using (HttpClient httpclient = new HttpClient())
-      {
-        httpclient.BaseAddress = new Uri("https://localhost:56503/");
-        httpclient.DefaultRequestHeaders.Accept.Clear();
-        httpclient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-        HttpResponseMessage httpResponseMessage = httpclient.GetAsync("Personnel").Result;
-        httpResponseMessage.EnsureSuccessStatusCode(); //si code 200 requete valide
-        string json = httpResponseMessage.Content.ReadAsStringAsync().Result;
-        //parseur de json va retransformer en objet
-        return JsonConvert.DeserializeObject<Personnel[]>(json);
-      }
+      return h.GetAsyncList<Personnel>("Personnel");
     }
 
     public Personnel Get(int id)
     {
-      using (HttpClient httpclient = new HttpClient())
-      {
-        httpclient.BaseAddress = new Uri("https://localhost:56503/");
-        httpclient.DefaultRequestHeaders.Accept.Clear();
-        httpclient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-        HttpResponseMessage httpResponseMessage = httpclient.GetAsync("Personnel/"+id).Result;
-        httpResponseMessage.EnsureSuccessStatusCode(); //si code 200 requete valide
-        string json = httpResponseMessage.Content.ReadAsStringAsync().Result;
-        //parseur de json va retransformer en objet
-        return JsonConvert.DeserializeObject<Personnel>(json);
-      }
+      return h.GetAsync<Personnel>("Personnel/" + id);
     }
 
     public IEnumerable<Personnel> GetPersonnelByShowroom(int idShowroom)
     {
-      using (HttpClient httpclient = new HttpClient())
-      {
-        httpclient.BaseAddress = new Uri("https://localhost:56503/");
-        httpclient.DefaultRequestHeaders.Accept.Clear();
-        httpclient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-        HttpResponseMessage httpResponseMessage = httpclient.GetAsync("Personnel/"+idShowroom"/).Result;
-        httpResponseMessage.EnsureSuccessStatusCode(); //si code 200 requete valide
-        string json = httpResponseMessage.Content.ReadAsStringAsync().Result;
-        //parseur de json va retransformer en objet
-        return JsonConvert.DeserializeObject<Personnel[]>(json);
-      }
+      return h.GetAsyncList<Personnel>("Personnel/"+idShowroom+"/GetByShowroom");
     }
 
-    public Personnel UnsetAdmin(int id, Personnel entity)
+    public bool UnsetAdmin(int id, Personnel entity)
     {
-      throw new NotImplementedException();
+      return h.PutBool(id, entity, "Secure/Personnel/" + id + "/UnsetAdmin");
     }
 
-    public Personnel Update(int id, Personnel entity)
+    public bool Update(int id, Personnel entity)
     {
-      throw new NotImplementedException();
+      return h.PutBool(id, entity, "Secure/Personnel/" + id);
+    }
+
+    public Personnel UpdateAndGet(int id, Personnel entity)
+    {
+      if (this.Update(id, entity)) return this.Get(id);
+      return entity;
     }
   }
 }

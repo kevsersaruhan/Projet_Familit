@@ -8,145 +8,58 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using DAL.Repository;
+using DAL_API.Repository;
 
 namespace DAL_API.Services
 {
   public class ShowroomRepository : IShowroomRepository<int, Showroom>
   {
-    public Showroom Activer(int id, Showroom entity)
+    Helper h = new Helper();
+    public bool Activer(int id, Showroom entity)
     {
-      using (HttpClient httpclient = new HttpClient())
-      {
-        httpclient.BaseAddress = new Uri("https://localhost:56503/");
-        httpclient.DefaultRequestHeaders.Accept.Clear();
-        httpclient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-        string jsonContent = JsonConvert.SerializeObject(entity); HttpContent httpContent = new StringContent(jsonContent);
-        httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-        HttpResponseMessage httpResponseMessage = httpclient.PutAsync("Secure/Showroom/"+id+"/Activer", httpContent).Result;
-        httpResponseMessage.EnsureSuccessStatusCode(); //si code 200 requete valide
-        string json = httpResponseMessage.Content.ReadAsStringAsync().Result;
-        //parseur de json va retransformer en objet
-        return JsonConvert.DeserializeObject<Showroom>(json);
-      }
+      return h.PutBool(id, entity, "Secure/Showroom/" + id + "/Activer");
     }
 
     public Showroom Add(Showroom entity)
     {
-      using (HttpClient httpclient = new HttpClient())
-      {
-        httpclient.BaseAddress = new Uri("https://localhost:56503/");
-        httpclient.DefaultRequestHeaders.Accept.Clear();
-        httpclient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-        string jsonContent = JsonConvert.SerializeObject(entity);
-        HttpContent httpContent = new StringContent(jsonContent);
-        httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-        HttpResponseMessage httpResponseMessage = httpclient.PostAsync("Secure/Showroom",httpContent).Result;
-        httpResponseMessage.EnsureSuccessStatusCode(); //si code 200 requete valide
-        string json = httpResponseMessage.Content.ReadAsStringAsync().Result;
-        //parseur de json va retransformer en objet
-        return JsonConvert.DeserializeObject<Showroom>(json);
-      }
+      return h.PostAsyncObject(entity, "Secure/Showroom");
     }
 
     public void Delete(int id, Showroom entity)
     {
-      using (HttpClient httpclient = new HttpClient())
-      {
-        httpclient.BaseAddress = new Uri("https://localhost:56503/");
-        httpclient.DefaultRequestHeaders.Accept.Clear();
-        httpclient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-        string jsonContent = JsonConvert.SerializeObject(entity);
-        HttpContent httpContent = new StringContent(jsonContent);
-        httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-        HttpResponseMessage httpResponseMessage = httpclient.DeleteAsync("Secure/Showroom/" + id).Result;
-        httpResponseMessage.EnsureSuccessStatusCode(); //si code 200 requete valide
-      }
+      h.DeleteAsync(id, entity, "Secure/Showroom/" + id);
     }
 
-    public Showroom Desactiver(int id, Showroom entity)
+    public bool Desactiver(int id, Showroom entity)
     {
-      using (HttpClient httpclient = new HttpClient())
-      {
-        httpclient.BaseAddress = new Uri("https://localhost:56503/");
-        httpclient.DefaultRequestHeaders.Accept.Clear();
-        httpclient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-        string jsonContent = JsonConvert.SerializeObject(entity);
-        HttpContent httpContent = new StringContent(jsonContent);
-        httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-        HttpResponseMessage httpResponseMessage = httpclient.PutAsync("Secure/Showroom/"+id+"/Desactiver", httpContent).Result;
-        httpResponseMessage.EnsureSuccessStatusCode(); //si code 200 requete valide
-        string json = httpResponseMessage.Content.ReadAsStringAsync().Result;
-        //parseur de json va retransformer en objet
-        return JsonConvert.DeserializeObject<Showroom>(json);
-      }
+      return h.PutBool(id, entity, "Secure/Showroom/" + id + "/Desactiver");
     }
 
     public IEnumerable<Showroom> Get()
     {
-      using (HttpClient httpclient = new HttpClient())
-      {
-        httpclient.BaseAddress = new Uri("https://localhost:56503/");
-        httpclient.DefaultRequestHeaders.Accept.Clear();
-        httpclient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-        HttpResponseMessage httpResponseMessage = httpclient.GetAsync("Showroom").Result;
-        httpResponseMessage.EnsureSuccessStatusCode(); //si code 200 requete valide
-        string json = httpResponseMessage.Content.ReadAsStringAsync().Result;
-        //parseur de json va retransformer en objet
-        return JsonConvert.DeserializeObject<Showroom[]>(json);
-      }
+      return h.GetAsyncList<Showroom>("Showroom");
     }
 
     public Showroom Get(int id)
     {
-      using (HttpClient httpclient = new HttpClient())
-      {
-        httpclient.BaseAddress = new Uri("https://localhost:56503/");
-        httpclient.DefaultRequestHeaders.Accept.Clear();
-        httpclient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-        HttpResponseMessage httpResponseMessage = httpclient.GetAsync("Showroom/"+id).Result;
-        httpResponseMessage.EnsureSuccessStatusCode(); //si code 200 requete valide
-        string json = httpResponseMessage.Content.ReadAsStringAsync().Result;
-        //parseur de json va retransformer en objet
-        return JsonConvert.DeserializeObject<Showroom>(json);
-      }
+      return h.GetAsync<Showroom>("Showroom/" + id+"/GetById");
     }
 
     public IEnumerable<Showroom> GetShowroomByName(string name)
     {
-      using (HttpClient httpclient = new HttpClient())
-      {
-        httpclient.BaseAddress = new Uri("https://localhost:56503/");
-        httpclient.DefaultRequestHeaders.Accept.Clear();
-        httpclient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-        HttpResponseMessage httpResponseMessage = httpclient.GetAsync("Showroom/"+name+"/GetByName").Result;
-        httpResponseMessage.EnsureSuccessStatusCode(); //si code 200 requete valide
-        string json = httpResponseMessage.Content.ReadAsStringAsync().Result;
-        //parseur de json va retransformer en objet
-        return JsonConvert.DeserializeObject<Showroom[]>(json);
-      }
+      return h.GetAsyncList<Showroom>("Showroom / " + name + " / GetByName");
     }
 
-    public Showroom Update(int id, Showroom entity)
+    public bool Update(int id, Showroom entity)
     {
-      using (HttpClient httpclient = new HttpClient())
-      {
-        httpclient.BaseAddress = new Uri("https://localhost:56503/");
-        httpclient.DefaultRequestHeaders.Accept.Clear();
-        httpclient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+      return h.PutBool(id, entity, "Secure/Showroom/" + id);
+    }
 
-        string jsonContent = JsonConvert.SerializeObject(entity);
-        HttpContent httpContent = new StringContent(jsonContent);
-        httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-        HttpResponseMessage httpResponseMessage = httpclient.PutAsync("Secure/Showroom/"+id, httpContent).Result;
-        httpResponseMessage.EnsureSuccessStatusCode(); //si code 200 requete valide
-        string json = httpResponseMessage.Content.ReadAsStringAsync().Result;
-        //parseur de json va retransformer en objet
-        return JsonConvert.DeserializeObject<Showroom>(json);
-      }
+    public Showroom UpdateAndGet(int id, Showroom entity)
+    {
+      if (this.Update(id, entity)) return this.Get(id);
+      return entity;
     }
   }
 }

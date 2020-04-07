@@ -12,7 +12,7 @@ namespace DAL_API.Repository.ProduitRepository
     IEnumerable<T> GetProductByFournisseur(int id);
     IEnumerable<T> GetProductFav(int id);
     IEnumerable<T> GetProductListByCaracteristique(int idcaract);
-    void Desactiver(TKey id);
-    void Activer(TKey id);
+    bool Desactiver(TKey id, T entity);
+    bool Activer(TKey id, T entity);
   }
 }

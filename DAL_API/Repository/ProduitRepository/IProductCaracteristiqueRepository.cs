@@ -8,7 +8,7 @@ namespace DAL_API.Repository.ProduitRepository
 {
   public interface IProductCaracteristiqueRepository
   {
-    void AddCaracteristiqueToProduct(int idCaract, int idProduct);
+    bool AddCaracteristiqueToProduct(int idCaract, int idProduct);
     void DeleteCaracteristiqueFromProduct(int idCaract, int idProduct);
   }
 }

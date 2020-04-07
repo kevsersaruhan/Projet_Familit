@@ -10,59 +10,67 @@ namespace DAL_API.Services
 {
   public class ProductRepository : IProductRepository<int, Produit>
   {
-    public void Activer(int id)
+    public Helper h = new Helper();
+    public bool Activer(int id, Produit entity)
     {
-      throw new NotImplementedException();
+      return h.PutBool(id, entity, "Secure/Product/" + id + "/Activer");
     }
 
-    public void Add(Produit entity)
+    public Produit Add(Produit entity)
     {
-      throw new NotImplementedException();
+      return h.PostAsyncObject(entity, "Secure/Product");
     }
 
-    public void Delete(int id)
+    public void Delete(int id, Produit entity)
     {
-      throw new NotImplementedException();
+      h.DeleteAsync(id, entity, "Secure/Product/" + id);
     }
 
-    public void Desactiver(int id)
+    public bool Desactiver(int id, Produit entity)
     {
-      throw new NotImplementedException();
+      return h.PutBool(id, entity, "Secure/Product/" + id + "/Desactiver");
     }
 
     public IEnumerable<Produit> Get()
     {
-      throw new NotImplementedException();
+      return h.GetAsyncList<Produit>("Product");
     }
 
     public Produit Get(int id)
     {
-      throw new NotImplementedException();
+      return h.GetAsync<Produit>("Product/" + id);
     }
 
     public IEnumerable<Produit> GetProductByFournisseur(int id)
     {
-      throw new NotImplementedException();
+      return h.GetAsyncList<Produit>("Product/"+id+"/GetByFournisseur");
     }
 
     public IEnumerable<Produit> GetProductByName(string s)
     {
-      throw new NotImplementedException();
+      return h.GetAsyncList<Produit>("Product/" + s + "/GetByName");
     }
 
     public IEnumerable<Produit> GetProductFav(int id)
     {
-      throw new NotImplementedException();
+      return h.GetAsyncList<Produit>("Product/" + id + "/GetProductFav");
     }
 
     public IEnumerable<Produit> GetProductListByCaracteristique(int idcaract)
     {
-      throw new NotImplementedException();
+      return h.GetAsyncList<Produit>("Product/" + idcaract + "/GetByCaracteristique");
+
     }
 
-    public void Update(int id, Produit entity)
+    public bool Update(int id, Produit entity)
     {
-      throw new NotImplementedException();
+      return h.PutBool(id, entity, "Secure/Product/" + id);
+    }
+
+    public Produit UpdateAndGet(int id, Produit entity)
+    {
+      if (this.Update(id, entity)) return this.Get(id);
+      return entity;
     }
   }
 }
