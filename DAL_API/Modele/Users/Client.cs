@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DAL_API.Modele.Users
 {
-  public class Client
+  public class Client : User
   {
     public Client()
     {

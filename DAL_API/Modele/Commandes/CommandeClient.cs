@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAL_API.Modele.Commandes
 {
-  public class CommandeClient
+  public class CommandeClient : Commande
   {
     public int VendeurID { get; set; }
     public string MoyenDePaiement { get; set; }

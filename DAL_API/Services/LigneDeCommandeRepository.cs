@@ -40,5 +40,14 @@ namespace DAL_API.Services
       if (this.Update(id, entity)) return this.Get(id);
       return entity;
     }
+    public IEnumerable<LigneDeCommande> GetByCommandeId(int idCommande)
+    {
+      return h.GetAsyncList<LigneDeCommande>("LigneDeCommande/" + idCommande + "/GetByCommande");
+    }
+
+    public IEnumerable<LigneDeCommande> GetByProductId(int idProduct)
+    {
+      return h.GetAsyncList<LigneDeCommande>("LigneDeCommande/" + idProduct + "/GetByProduct");
+    }
   }
 }
