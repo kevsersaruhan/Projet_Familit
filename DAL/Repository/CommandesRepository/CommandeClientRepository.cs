@@ -17,6 +17,8 @@ namespace DAL.Repository.CommandesRepository
   public class CommandeClientRepository : IRepository<int, CommandeClients>
   {
     private string _constring = ConfigurationManager.ConnectionStrings["BDD_Familit"].ConnectionString;
+
+    //Ok
     public void Add(CommandeClients entity)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -46,6 +48,7 @@ namespace DAL.Repository.CommandesRepository
       }
     }
 
+    //Ok
     public void Delete(int id)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -64,6 +67,7 @@ namespace DAL.Repository.CommandesRepository
       }
     }
 
+    //Ok
     public IEnumerable<CommandeClients> Get()
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -116,6 +120,7 @@ namespace DAL.Repository.CommandesRepository
       }
     }
 
+    //Ok
     public CommandeClients Get(int id)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -172,7 +177,9 @@ namespace DAL.Repository.CommandesRepository
         }
       }
     }
-    public void Update(int id, CommandeClients entity)
+
+    //Ok
+    public void Update(CommandeClients entity)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
       {
@@ -192,7 +199,7 @@ namespace DAL.Repository.CommandesRepository
           command.Parameters.AddWithValue("@ClientId", entity.ClientID);
           command.Parameters.AddWithValue("@PersonnelId", entity.VendeurID);
           command.Parameters.AddWithValue("@ShowroomId", entity.Showroom.ID);
-          command.Parameters.AddWithValue("@id", id);
+          command.Parameters.AddWithValue("@id", entity.ID);
           if (connection.State != ConnectionState.Open)
           {
             connection.Open();
@@ -202,6 +209,7 @@ namespace DAL.Repository.CommandesRepository
       }
     }
 
+    //Ok
     public IEnumerable<CommandeClients> GetCommandeClient(int idclient)
     {
       List<CommandeClients> ListeCommandeClient = new List<CommandeClients>();

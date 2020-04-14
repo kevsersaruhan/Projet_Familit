@@ -180,6 +180,7 @@
     <Build Include="Views\ProduitCategorie.sql" />
     <Build Include="Views\CommandeShowroom.sql" />
     <Build Include="Views\LigneDeCommandeProduct.sql" />
+    <Build Include="Stored Procedures\SP_Users\SP_Client\SP_Client_GetFournisseur.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="BDD Familit.refactorlog" />

@@ -22,5 +22,6 @@ namespace DAL.Model.User
     public int NumTel { get; set; }
     public string Email { get; set; }
     public bool IsActif { get; set; }
+    public int AdresseID { get; set; }
   }
 }

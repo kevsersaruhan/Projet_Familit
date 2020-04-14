@@ -5,6 +5,7 @@ CREATE VIEW [dbo].[ClientAdresse]
   c.Nom,
   c.Prenom,
   c.Login,
+  c.EstFournisseur,
   c.IsActif,
   c.AdresseId,
   c.NumBCE,

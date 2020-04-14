@@ -5,5 +5,3 @@ AS
 	INSERT INTO [Product_Caracteristique] ([ProductId],[CaracteristiqueId])
   OUTPUT INSERTED.Id
   VALUES (@idProduct,@idCaracteristique)
-
-RETURN 0

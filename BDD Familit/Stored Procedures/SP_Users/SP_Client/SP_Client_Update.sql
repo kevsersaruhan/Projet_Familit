@@ -1,7 +1,7 @@
 CREATE PROCEDURE [dbo].[SP_Client_Update]
 	@nom NVARCHAR(60),
-  @Prenom NVARCHAR(60),
-  @Login NVARCHAR (60) = NULL,
+  @prenom NVARCHAR(60),
+  @login NVARCHAR (60) = NULL,
   @Password NVARCHAR(60) = NULL,
   @NumBCE NVARCHAR(12) = NULL,
   @EstFournisseur BIT,
@@ -19,6 +19,6 @@ CREATE PROCEDURE [dbo].[SP_Client_Update]
 AS
  EXEC [dbo].SP_Adresse_Update @adRue, @adNum, @adCp, @adVille, @adPays,@email, @numTel, @adresseId
 
-UPDATE [Client] SET [Nom]=@nom, [Prenom]=@prenom,[Login]=@Login,[Password]=[dbo].SF_HashPassword(@password),
+UPDATE [Client] SET [Nom]=@nom, [Prenom]=@prenom,[Login]=@login,[Password]=[dbo].SF_HashPassword(@password),
                     [NumBCE]=@NumBCE,[EstFournisseur]=@EstFournisseur,[AdresseId]=@adresseId,[IsActif]=@isActif
                 WHERE Id=@id

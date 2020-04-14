@@ -15,7 +15,7 @@ namespace DAL.Repository.ProductsRepository
   {
     private string _constring = ConfigurationManager.ConnectionStrings["BDD_Familit"].ConnectionString;
 
-
+    //Ok
     public void Activer(int id)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -33,6 +33,8 @@ namespace DAL.Repository.ProductsRepository
         }
       }
     }
+
+    //Ok
     public void Add(Categories entity)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -53,6 +55,8 @@ namespace DAL.Repository.ProductsRepository
         }
       }
     }
+
+    //Ok
     public void Delete(int id)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -70,6 +74,8 @@ namespace DAL.Repository.ProductsRepository
         }
       }
     }
+
+    //Ok
     public void Desactiver(int id)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -87,6 +93,8 @@ namespace DAL.Repository.ProductsRepository
         }
       }
     }
+
+
     public IEnumerable<Categories> Get()
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -115,6 +123,8 @@ namespace DAL.Repository.ProductsRepository
         }
       }
     }
+
+    //Ok
     public Categories Get(int id)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -149,6 +159,8 @@ namespace DAL.Repository.ProductsRepository
         }
       }
     }
+
+    //Ok
     public IEnumerable<Categories> GetCategorieByName(string s)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -178,7 +190,9 @@ namespace DAL.Repository.ProductsRepository
         }
       }
     }
-    public void Update(int id, Categories entity)
+
+    //Ok
+    public void Update(Categories entity)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
       {
@@ -186,6 +200,7 @@ namespace DAL.Repository.ProductsRepository
         {
           command.CommandType = CommandType.StoredProcedure;
           command.CommandText = "SP_Caracteristique_Update";
+          command.Parameters.AddWithValue("@id", entity.ID);
           command.Parameters.AddWithValue("@nom", entity.Nom);
           command.Parameters.AddWithValue("@details", entity.Details);
           command.Parameters.AddWithValue("@isActif", entity.IsActif);

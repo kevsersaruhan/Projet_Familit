@@ -14,4 +14,3 @@ AS
   [CategorieId]=@catId,[ClientId]=@clientId,[IsActif]=@isActif
   WHERE Id = @id
 
-RETURN 0

@@ -14,7 +14,8 @@ namespace DAL.Repository.ProductsRepository
   public class CaracteristiqueRepository : ICaracteristiqueRepository<int, Caracteristique>
   {
     private string _constring = ConfigurationManager.ConnectionStrings["BDD_Familit"].ConnectionString;
-   
+
+   //Ok
     public void Add(Caracteristique entity)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -25,7 +26,7 @@ namespace DAL.Repository.ProductsRepository
           command.CommandText = "SP_Caracteristique_Add";
           command.Parameters.AddWithValue("@Nom", entity.Nom);
           command.Parameters.AddWithValue("@Details", entity.Details);
-          command.Parameters.AddWithValue("@dCategorie", entity.CatId);
+          command.Parameters.AddWithValue("@Categorie", entity.CatId);
           if (connection.State != ConnectionState.Open)
           {
             connection.Open();
@@ -36,6 +37,7 @@ namespace DAL.Repository.ProductsRepository
       }
     }
 
+    //Ok
     public void Delete(int id)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -54,6 +56,7 @@ namespace DAL.Repository.ProductsRepository
       }
     }
 
+    //Ok
     public IEnumerable<Caracteristique> Get()
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -90,6 +93,7 @@ namespace DAL.Repository.ProductsRepository
       }
     }
 
+    //Ok
     public Caracteristique Get(int id)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -133,6 +137,7 @@ namespace DAL.Repository.ProductsRepository
 
     }
 
+    //Ok
     public IEnumerable<Caracteristique> GetCaracteristiqueByCategorie(int idcat)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -170,6 +175,7 @@ namespace DAL.Repository.ProductsRepository
       }
     }
 
+    //Ok
     public IEnumerable<Caracteristique> GetCaracteristiqueByProduct(int idproduct)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -207,7 +213,8 @@ namespace DAL.Repository.ProductsRepository
       }
     }
 
-    public void Update(int id, Caracteristique entity)
+    //Ok
+    public void Update(Caracteristique entity)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
       {
@@ -215,6 +222,7 @@ namespace DAL.Repository.ProductsRepository
         {
           command.CommandType = CommandType.StoredProcedure;
           command.CommandText = "SP_Caracteristique_Update";
+          command.Parameters.AddWithValue("@id", entity.Id);
           command.Parameters.AddWithValue("@nom", entity.Nom);
           command.Parameters.AddWithValue("@details", entity.Details);
           command.Parameters.AddWithValue("@categorieId", entity.CatId);

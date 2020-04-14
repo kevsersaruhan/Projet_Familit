@@ -17,6 +17,8 @@ namespace DAL.Repository.CommandesRepository
   public class CommandeRepository : IRepository<int, Commandes>
   {
     private string _constring = ConfigurationManager.ConnectionStrings["BDD_Familit"].ConnectionString;
+
+    //Ok
     public void Add(Commandes entity)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -46,6 +48,7 @@ namespace DAL.Repository.CommandesRepository
       }
     }
 
+    //Ok
     public void Delete(int id)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -64,6 +67,7 @@ namespace DAL.Repository.CommandesRepository
       }
     }
 
+    //Ok
     public IEnumerable<Commandes> Get()
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -99,8 +103,7 @@ namespace DAL.Repository.CommandesRepository
                   AdVille = (string)reader["AdVille"],
                   AdPays = (string)reader["AdPays"],
                   NumTel = (int)reader["NumTel"],
-                  Email = (string)reader["EMail"],
-                  IsActif = (bool)reader["IsActif"]
+                  Email = (string)reader["EMail"]
                 },
                 ShowroomID = (int)reader["ComShowroomID"],
                 ClientID = (int)reader["ClientId"]
@@ -111,6 +114,7 @@ namespace DAL.Repository.CommandesRepository
       }
     }
 
+    //Ok
     public Commandes Get(int id)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -147,8 +151,7 @@ namespace DAL.Repository.CommandesRepository
                   AdVille = (string)reader["AdVille"],
                   AdPays = (string)reader["AdPays"],
                   NumTel = (int)reader["NumTel"],
-                  Email = (string)reader["EMail"],
-                  IsActif = (bool)reader["IsActif"]
+                  Email = (string)reader["EMail"]
                 },
                 ShowroomID = (int)reader["ComShowroomID"],
                 ClientID = (int)reader["ClientId"]
@@ -163,7 +166,8 @@ namespace DAL.Repository.CommandesRepository
       }
     }
 
-    public void Update(int id, Commandes entity)
+    //Ok
+    public void Update(Commandes entity)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
       {
@@ -178,12 +182,19 @@ namespace DAL.Repository.CommandesRepository
           command.Parameters.AddWithValue("@TypeDecommande", entity.TypeDeCommande);
           command.Parameters.AddWithValue("@ClientId", entity.ClientID);
           command.Parameters.AddWithValue("@ShowroomId", entity.ShowroomID);
-          command.Parameters.AddWithValue("@id", id);
+          command.Parameters.AddWithValue("@id",entity.ID);
+          command.Parameters.AddWithValue("@MoyenDePaiement", null);
+          command.Parameters.AddWithValue("@Statut", null);
+          command.Parameters.AddWithValue("@Livraison", null);
+          command.Parameters.AddWithValue("@DateDeLivraison", null);
+          command.Parameters.AddWithValue("@PersonnelId", null);
           connection.Open();
           command.ExecuteNonQuery();
         }
       }
     }
+
+    //Ok
     public IEnumerable<Commandes> GetCommandeClient(int idclient)
     {
       using (SqlConnection connection = new SqlConnection(_constring))

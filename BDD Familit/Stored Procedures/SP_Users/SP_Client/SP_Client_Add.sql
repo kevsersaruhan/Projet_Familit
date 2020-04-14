@@ -1,7 +1,7 @@
 CREATE PROCEDURE [dbo].[SP_Client_Add]
   @nom NVARCHAR(60),
   @Prenom NVARCHAR(60),
-  @Login NVARCHAR (60) ,
+  @login NVARCHAR (60) ,
   @Password NVARCHAR(60) ,
   @NumBCE NVARCHAR(12),
   @EstFournisseur BIT,

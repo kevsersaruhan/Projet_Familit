@@ -18,7 +18,7 @@ CREATE VIEW [dbo].[CommandeShowroom]
     Nom,
     NumBCE,
     IsActif,
-    AdresseID,
+    AdresseId,
     AdRue,
     AdNum,
     AdCp,

@@ -4,7 +4,7 @@ CREATE PROCEDURE [dbo].[SP_Commandes_Update]
   @Acompte decimal,
   @Solde decimal,
   @MoyenDePaiement NVARCHAR(10),
-  @Statut NVARCHAR(10),
+  @statut NVARCHAR(10),
   @Livraison Bit,
   @DateDeLivraison Date,
   @TypeDecommande NVARCHAR(30),

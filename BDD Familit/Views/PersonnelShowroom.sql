@@ -3,20 +3,22 @@ AS
 SELECT
 p.Id as personnelID,
 p.IsActif,
+p.IsAdmin,
 p.Nom,
 Prenom,
 DateDeNaissance,
 DateDEngagement,
 Fonction,
+Salaire,
 [Login],
-p.AdresseID as PersonnelAdresseID,
+p.AdresseId as PersoAdresseID,
 a.AdRue as PersonnelAdRue,
 a.AdNum as PersonnelAdNum,
 a.AdCp as PersonnelAdCp,
 a.AdVille as PersonnelAdVille,
 a.AdPays as PersonnelAdPays,
 a.NumTel as PersonnelNumTel,
-a.Email as PersonnelEmail,
+a.EMail as PersoEmail,
 s.Id as ShowroomID,
 s.Nom as ShowroomName ,
 s.NumBCE as ShowroomNumBCE,
@@ -28,7 +30,7 @@ b.AdCp,
 b.AdVille,
 b.AdPays,
 b.NumTel,
-b.Email
+b.EMail
 
 FROM Personnel p
 INNER JOIN Adresse a

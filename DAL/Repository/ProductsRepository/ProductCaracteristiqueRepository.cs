@@ -14,6 +14,8 @@ namespace DAL.Repository.ProductsRepository
   public class ProductCaracteristiqueRepository : IProductCaracteristiqueRepository
   {
     private string _constring = ConfigurationManager.ConnectionStrings["BDD_Familit"].ConnectionString;
+
+    //OK
     public void AddCaracteristiqueToProduct(int idCaract, int idProduct)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -30,6 +32,8 @@ namespace DAL.Repository.ProductsRepository
         }
       }
     }
+
+    //Ok
     public void DeleteCaracteristiqueFromProduct(int idCaract, int idProduct)
     {
       using (SqlConnection connection = new SqlConnection(_constring))

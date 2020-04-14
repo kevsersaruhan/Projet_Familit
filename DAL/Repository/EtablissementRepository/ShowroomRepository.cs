@@ -1,22 +1,18 @@
 using DAL.Model.Etablissement;
-using DAL.Repository.UserRepository;
 using DAL.Utils.EtablissementUtils;
-using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace DAL.Repository.EtablissementRepository
 {
   public class ShowroomRepository : IShowroomRepository<int, Showrooms>
   {
     private string _constring = ConfigurationManager.ConnectionStrings["BDD_Familit"].ConnectionString;
-    PersonnelRepository persoRepo = new PersonnelRepository();
 
+    // Activation du showroom OK pour la stored procedure
     public void Activer(int id)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -35,6 +31,7 @@ namespace DAL.Repository.EtablissementRepository
       }
     }
 
+    // Ajout du Showroom dans la table Showroom et de son adresse dans la table Adresse OK ( renvoie Scope Identity pour AdresseID)
     public void Add(Showrooms entity)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -62,6 +59,7 @@ namespace DAL.Repository.EtablissementRepository
       }
     }
 
+    // Suppression Du Showroom ok
     public void Delete(int id)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -80,6 +78,7 @@ namespace DAL.Repository.EtablissementRepository
       }
     }
 
+    // Désactivation du showroom ok
     public void Desactiver(int id)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -98,6 +97,7 @@ namespace DAL.Repository.EtablissementRepository
       }
     }
 
+    // Get Ok au niveau des paramètres
     public IEnumerable<Showrooms> Get()
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -119,21 +119,23 @@ namespace DAL.Repository.EtablissementRepository
                 ID = (int)reader["ShowroomId"],
                 Nom = (string)reader["Nom"],
                 NumBCE = (string)reader["NumBCE"],
+                AdresseID = (int)reader["AdresseId"],
                 AdRue = (string)reader["AdRue"],
                 AdNum = (string)reader["AdNum"],
                 AdCP = (int)reader["AdCp"],
                 AdVille = (string)reader["AdVille"],
                 AdPays = (string)reader["AdPays"],
                 NumTel = (int)reader["NumTel"],
-                Email = (string)reader["EMail"],
+                Email = (string)reader["Email"],
                 IsActif = (bool)reader["IsActif"]
-              };
+              }; 
             }
           }
         }
       }
     }
 
+    // Get Ok au niveau des paramètres
     public Showrooms Get(int id)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -156,13 +158,14 @@ namespace DAL.Repository.EtablissementRepository
                 ID = (int)reader["ShowroomId"],
                 Nom = (string)reader["Nom"],
                 NumBCE = (string)reader["NumBCE"],
+                AdresseID = (int)reader["AdresseId"],
                 AdRue = (string)reader["AdRue"],
                 AdNum = (string)reader["AdNum"],
                 AdCP = (int)reader["AdCp"],
                 AdVille = (string)reader["AdVille"],
                 AdPays = (string)reader["AdPays"],
                 NumTel = (int)reader["NumTel"],
-                Email = (string)reader["EMail"],
+                Email = (string)reader["Email"],
                 IsActif = (bool)reader["IsActif"]
               };
             }
@@ -175,6 +178,7 @@ namespace DAL.Repository.EtablissementRepository
       }
     }
 
+    // Ok au niveau des paramètres
     public IEnumerable<Showrooms> GetShowroomByName(string name)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -204,7 +208,7 @@ namespace DAL.Repository.EtablissementRepository
                 AdPays = (string)reader["AdPays"],
                 IsActif = (bool)reader["IsActif"],
                 NumTel = (int)reader["NumTel"],
-                Email = (string)reader["EMail"]
+                Email = (string)reader["Email"]
               };
             }
           }
@@ -212,7 +216,8 @@ namespace DAL.Repository.EtablissementRepository
       }
     }
 
-    public void Update(int id, Showrooms entity)
+    // Ok au niveau des paramètres
+    public void Update(Showrooms entity)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
       {
@@ -229,7 +234,8 @@ namespace DAL.Repository.EtablissementRepository
           command.Parameters.AddWithValue("@adPays", entity.AdPays);
           command.Parameters.AddWithValue("@email", entity.Email);
           command.Parameters.AddWithValue("@numTel", entity.NumTel);
-          command.Parameters.AddWithValue("@id", id);
+          command.Parameters.AddWithValue("@adresseId", entity.AdresseID);
+          command.Parameters.AddWithValue("@id", entity.ID);
           command.Parameters.AddWithValue("@isActif", entity.IsActif);
           if (connection.State != ConnectionState.Open)
           {

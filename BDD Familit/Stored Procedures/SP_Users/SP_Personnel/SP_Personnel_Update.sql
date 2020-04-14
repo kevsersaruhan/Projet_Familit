@@ -2,7 +2,7 @@ CREATE PROCEDURE [dbo].[SP_Personnel_Update]
   @nom NVARCHAR(60),
   @Prenom NVARCHAR(60),
   @dateDeNaissance Date,
-  @Login NVARCHAR (60),
+  @login NVARCHAR (60),
   @Password NVARCHAR(60),
   @Function NVARCHAR(60),
   @IsAdmin Bit,

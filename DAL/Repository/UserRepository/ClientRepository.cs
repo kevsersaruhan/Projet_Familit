@@ -17,6 +17,7 @@ namespace DAL.Repository.UserRepository
   {
     private string _constring = ConfigurationManager.ConnectionStrings["BDD_Familit"].ConnectionString;
 
+    //Ok
     public void Activer(int id)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -34,6 +35,8 @@ namespace DAL.Repository.UserRepository
         }
       }
     }
+
+    //Ok
     public void Add(Client entity)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -44,7 +47,7 @@ namespace DAL.Repository.UserRepository
           command.CommandText = "SP_Client_Add";
           command.Parameters.AddWithValue("@nom", entity.Nom);
           command.Parameters.AddWithValue("@Prenom", entity.Prenom);
-          command.Parameters.AddWithValue("@Login", entity.Login);
+          command.Parameters.AddWithValue("@login", entity.Login);
           command.Parameters.AddWithValue("@Password", entity.Password);
           command.Parameters.AddWithValue("@EstFournisseur", entity.EstFournisseur);
           command.Parameters.AddWithValue("@NumBCE", entity.NumBCE);
@@ -64,6 +67,8 @@ namespace DAL.Repository.UserRepository
         }
       }
     }
+
+    //Ok
     public void ChangePassword(int id, string password)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -83,6 +88,8 @@ namespace DAL.Repository.UserRepository
         }
       }
     }
+
+    //Ok
     public void CheckClient(int id, string login, string password)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -103,6 +110,8 @@ namespace DAL.Repository.UserRepository
         }
       }
     }
+
+    //Ok
     public void Delete(int id)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -120,6 +129,8 @@ namespace DAL.Repository.UserRepository
         }
       }
     }
+
+    //Ok
     public void Desactiver(int id)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -137,6 +148,8 @@ namespace DAL.Repository.UserRepository
         }
       }
     }
+
+    //Ok
     public IEnumerable<Client> Get()
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -159,6 +172,7 @@ namespace DAL.Repository.UserRepository
                 Nom = (string)reader["Nom"],
                 Prenom = (string)reader["Prenom"],
                 Login = (string)reader["Login"],
+                AdresseID =(int)reader["AdresseId"],
                 NumBCE=(string)reader["NumBCE"],
                 EstFournisseur=(bool)reader["EstFournisseur"],
                 AdRue = (string)reader["AdRue"],
@@ -175,6 +189,48 @@ namespace DAL.Repository.UserRepository
         }
       }
     }
+
+    //Get Fournisseur
+    public IEnumerable<Client> GetFournisseur()
+    {
+      using (SqlConnection connection = new SqlConnection(_constring))
+      {
+        using (SqlCommand command = connection.CreateCommand())
+        {
+          command.CommandType = CommandType.StoredProcedure;
+          command.CommandText = "SP_Client_GetFournisseur";
+          if (connection.State != ConnectionState.Open)
+          {
+            connection.Open();
+          }
+          using (SqlDataReader reader = command.ExecuteReader())
+          {
+            while (reader.Read())
+            {
+              yield return new Client()
+              {
+                ID = (int)reader["ClientID"],
+                Nom = (string)reader["Nom"],
+                Prenom = (string)reader["Prenom"],
+                Login = (string)reader["Login"],
+                AdresseID = (int)reader["AdresseId"],
+                NumBCE = (string)reader["NumBCE"],
+                EstFournisseur = (bool)reader["EstFournisseur"],
+                AdRue = (string)reader["AdRue"],
+                AdNum = (string)reader["AdNum"],
+                AdCP = (int)reader["AdCp"],
+                AdVille = (string)reader["AdVille"],
+                AdPays = (string)reader["AdPays"],
+                NumTel = (int)reader["NumTel"],
+                Email = (string)reader["EMail"],
+                IsActif = (bool)reader["IsActif"]
+              };
+            }
+          }
+        }
+      }
+    }
+    //Ok
     public Client Get(int id)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -198,6 +254,7 @@ namespace DAL.Repository.UserRepository
                 Nom = (string)reader["Nom"],
                 Prenom = (string)reader["Prenom"],
                 Login = (string)reader["Login"],
+                AdresseID = (int)reader["AdresseId"],
                 NumBCE = (string)reader["NumBCE"],
                 EstFournisseur = (bool)reader["EstFournisseur"],
                 AdRue = (string)reader["AdRue"],
@@ -207,7 +264,7 @@ namespace DAL.Repository.UserRepository
                 AdPays = (string)reader["AdPays"],
                 NumTel = (int)reader["NumTel"],
                 Email = (string)reader["EMail"],
-                IsActif =(bool)reader["IsActif"]
+                IsActif = (bool)reader["IsActif"]
               };
             }
             else
@@ -218,6 +275,8 @@ namespace DAL.Repository.UserRepository
         }
       }
     }
+
+    //Ok
     public IEnumerable<Client> GetByName(string name)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -241,6 +300,7 @@ namespace DAL.Repository.UserRepository
                 Nom = (string)reader["Nom"],
                 Prenom = (string)reader["Prenom"],
                 Login = (string)reader["Login"],
+                AdresseID = (int)reader["AdresseId"],
                 NumBCE = (string)reader["NumBCE"],
                 EstFournisseur = (bool)reader["EstFournisseur"],
                 AdRue = (string)reader["AdRue"],
@@ -250,14 +310,16 @@ namespace DAL.Repository.UserRepository
                 AdPays = (string)reader["AdPays"],
                 NumTel = (int)reader["NumTel"],
                 Email = (string)reader["EMail"],
-                IsActif=(bool)reader["IsActif"]
-            };
+                IsActif = (bool)reader["IsActif"]
+              };
             }
           }
         }
       }
     }
-    public void Update(int id, Client entity)
+
+    //Ok
+    public void Update(Client entity)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
       {
@@ -266,8 +328,8 @@ namespace DAL.Repository.UserRepository
           command.CommandType = CommandType.StoredProcedure;
           command.CommandText = "SP_Client_Update";
           command.Parameters.AddWithValue("@nom", entity.Nom);
-          command.Parameters.AddWithValue("@Prenom", entity.Prenom);
-          command.Parameters.AddWithValue("@Login", entity.Login);
+          command.Parameters.AddWithValue("@prenom", entity.Prenom);
+          command.Parameters.AddWithValue("@login", entity.Login);
           command.Parameters.AddWithValue("@Password", entity.Password);
           command.Parameters.AddWithValue("@EstFournisseur", entity.EstFournisseur);
           command.Parameters.AddWithValue("@NumBCE", entity.NumBCE);
@@ -278,8 +340,9 @@ namespace DAL.Repository.UserRepository
           command.Parameters.AddWithValue("@adPays", entity.AdPays);
           command.Parameters.AddWithValue("@email", entity.Email);
           command.Parameters.AddWithValue("@numTel", entity.NumTel);
-          command.Parameters.AddWithValue("@id", id);
+          command.Parameters.AddWithValue("@id",entity.ID);
           command.Parameters.AddWithValue("@isActif", entity.IsActif);
+          command.Parameters.AddWithValue("@adresseId", entity.AdresseID);
           if (connection.State != ConnectionState.Open)
           {
             connection.Open();

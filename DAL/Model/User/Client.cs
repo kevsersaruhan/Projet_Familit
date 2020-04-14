@@ -14,10 +14,12 @@ namespace DAL.Model.User
     {
       ListFav = new List<Products>();
       ListCommande = new List<CommandeClients>();
+      if (EstFournisseur) ListeProduct = new List<Products>();
     }
     public string NumBCE { get; set; }
     public bool EstFournisseur { get; set; }
     public IEnumerable<Products> ListFav { get; set; }
+    public IEnumerable<Products> ListeProduct { get; set; }
     public IEnumerable<CommandeClients> ListCommande { get; set; }
   }
 }

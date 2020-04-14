@@ -17,7 +17,8 @@ namespace DAL.Repository.UserRepository
   public class PersonnelRepository : IPersonnelRepository<int, Personnel>
   {
     private string _constring = ConfigurationManager.ConnectionStrings["BDD_Familit"].ConnectionString;
-   
+
+    // Ok
     public void Activer(int id)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -35,6 +36,8 @@ namespace DAL.Repository.UserRepository
         }
       }
     }
+
+    //Corrigé 
     public void Add(Personnel entity)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -46,11 +49,12 @@ namespace DAL.Repository.UserRepository
           command.Parameters.AddWithValue("@nom", entity.Nom);
           command.Parameters.AddWithValue("@Prenom", entity.Prenom);
           command.Parameters.AddWithValue("@dateDeNaissance", entity.DateDeNaissance);
-          command.Parameters.AddWithValue("@Login", entity.Login);
+          command.Parameters.AddWithValue("@login", entity.Login);
           command.Parameters.AddWithValue("@Password", entity.Password);
           command.Parameters.AddWithValue("@Function", entity.Fonction);
           command.Parameters.AddWithValue("@IsAdmin", entity.IsAdmin);
           command.Parameters.AddWithValue("@DateDengagement", entity.HireDate);
+          command.Parameters.AddWithValue("@Salaire", entity.Salaire);
           command.Parameters.AddWithValue("@NbJourAbsence", entity.NbJoursAbsence);
           command.Parameters.AddWithValue("@NbJourVacances", entity.NbJourVacance);
           command.Parameters.AddWithValue("@ShowroomId", entity.ShowroomId);
@@ -62,6 +66,8 @@ namespace DAL.Repository.UserRepository
           command.Parameters.AddWithValue("@email", entity.Email);
           command.Parameters.AddWithValue("@numTel", entity.NumTel);
           command.Parameters.AddWithValue("@isActif", entity.IsActif);
+ 
+
           if (connection.State != ConnectionState.Open)
           {
             connection.Open();
@@ -71,6 +77,8 @@ namespace DAL.Repository.UserRepository
         }
       }
     }
+
+    //Ok
     public void ChangePassword(int id, string s)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -90,6 +98,8 @@ namespace DAL.Repository.UserRepository
         }
       }
     }
+
+    //Ok
     public void CheckPersonnel(int id, string login, string password)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -110,6 +120,8 @@ namespace DAL.Repository.UserRepository
         }
       }
     }
+
+    //Ok
     public void Delete(int id)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -127,6 +139,8 @@ namespace DAL.Repository.UserRepository
         }
       }
     }
+
+    //Ok
     public void Desactiver(int id)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -144,6 +158,8 @@ namespace DAL.Repository.UserRepository
         }
       }
     }
+
+    //Ok
     public void DoAdmin(int id)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -152,7 +168,7 @@ namespace DAL.Repository.UserRepository
         {
           command.CommandType = CommandType.StoredProcedure;
           command.CommandText = "SP_Personnel_DoAdmin";
-          command.Parameters.AddWithValue("@id", id);
+          command.Parameters.AddWithValue("@Id", id);
           if (connection.State != ConnectionState.Open)
           {
             connection.Open();
@@ -161,6 +177,8 @@ namespace DAL.Repository.UserRepository
         }
       }
     }
+
+    //Ok
     public IEnumerable<Personnel> Get()
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -179,13 +197,14 @@ namespace DAL.Repository.UserRepository
             {
               yield return new Personnel()
               {
-                ID = (int)reader["PersonnelID"],
+                ID = (int)reader["personnelID"],
                 Nom = (string)reader["Nom"],
                 Prenom = (string)reader["Prenom"],
                 DateDeNaissance = (DateTime)reader["DateDeNaissance"],
-                HireDate = (DateTime)reader["DateDengagement"],
+                HireDate = (DateTime)reader["DateDEngagement"],
                 Fonction = (string)reader["Fonction"],
                 Login = (string)reader["Login"],
+                AdresseID =(int)reader["PersoAdresseID"],
                 NbJoursAbsence = (int)reader["NbJourAbsence"],
                 NbJourVacance = (int)reader["NbJourVacances"],
                 Salaire = (double)reader["Salaire"],
@@ -195,7 +214,7 @@ namespace DAL.Repository.UserRepository
                 AdVille = (string)reader["PersonnelAdVille"],
                 AdPays = (string)reader["PersonnelAdPays"],
                 NumTel = (int)reader["PersonnelNumTel"],
-                Email = (string)reader["PersonnelEmail"],
+                Email = (string)reader["PersoEmail"],
                 ShowroomId=(int)reader["ShowroomId"],
                 LieuDeTravail = new Showrooms
                 {
@@ -208,7 +227,7 @@ namespace DAL.Repository.UserRepository
                   AdVille = (string)reader["AdVille"],
                   AdPays = (string)reader["AdPays"],
                   NumTel = (int)reader["NumTel"],
-                  Email = (string)reader["EMail"],
+                  Email = (string)reader["Email"],
                   IsActif = (bool)reader["ShowroomIsActif"]
 
                 },
@@ -220,6 +239,8 @@ namespace DAL.Repository.UserRepository
         }
       }
     }
+
+    //Ok
     public Personnel Get(int id)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -227,7 +248,7 @@ namespace DAL.Repository.UserRepository
         using (SqlCommand command = connection.CreateCommand())
         {
           command.CommandType = CommandType.StoredProcedure;
-          command.CommandText = "SP_GetByID";
+          command.CommandText = "SP_Personnel_GetByID";
           command.Parameters.AddWithValue("@id", id);
           if (connection.State != ConnectionState.Open)
           {
@@ -239,23 +260,24 @@ namespace DAL.Repository.UserRepository
             {
               return new Personnel()
               {
-                ID = (int)reader["Id"],
+                ID = (int)reader["personnelID"],
                 Nom = (string)reader["Nom"],
                 Prenom = (string)reader["Prenom"],
                 DateDeNaissance = (DateTime)reader["DateDeNaissance"],
-                HireDate = (DateTime)reader["DateDengagement"],
+                HireDate = (DateTime)reader["DateDEngagement"],
                 Fonction = (string)reader["Fonction"],
                 Login = (string)reader["Login"],
+                AdresseID = (int)reader["PersoAdresseID"],
                 NbJoursAbsence = (int)reader["NbJourAbsence"],
                 NbJourVacance = (int)reader["NbJourVacances"],
                 Salaire = (double)reader["Salaire"],
-                AdRue = (string)reader["AdRue"],
-                AdNum = (string)reader["AdNum"],
-                AdCP = (int)reader["AdCp"],
-                AdVille = (string)reader["AdVille"],
-                AdPays = (string)reader["AdPays"],
-                NumTel = (int)reader["NumTel"],
-                Email = (string)reader["EMail"],
+                AdRue = (string)reader["PersonnelAdRue"],
+                AdNum = (string)reader["PersonnelAdNum"],
+                AdCP = (int)reader["PersonnelAdCp"],
+                AdVille = (string)reader["PersonnelAdVille"],
+                AdPays = (string)reader["PersonnelAdPays"],
+                NumTel = (int)reader["PersonnelNumTel"],
+                Email = (string)reader["PersoEmail"],
                 ShowroomId = (int)reader["ShowroomId"],
                 LieuDeTravail = new Showrooms
                 {
@@ -268,7 +290,7 @@ namespace DAL.Repository.UserRepository
                   AdVille = (string)reader["AdVille"],
                   AdPays = (string)reader["AdPays"],
                   NumTel = (int)reader["NumTel"],
-                  Email = (string)reader["EMail"],
+                  Email = (string)reader["Email"],
                   IsActif = (bool)reader["ShowroomIsActif"]
 
                 },
@@ -285,6 +307,8 @@ namespace DAL.Repository.UserRepository
       }
 
     }
+
+    //Ok
     public IEnumerable<Personnel> GetByName(string name)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -304,23 +328,24 @@ namespace DAL.Repository.UserRepository
             {
               yield return new Personnel()
               {
-                ID = (int)reader["Id"],
+                ID = (int)reader["personnelID"],
                 Nom = (string)reader["Nom"],
                 Prenom = (string)reader["Prenom"],
                 DateDeNaissance = (DateTime)reader["DateDeNaissance"],
-                HireDate = (DateTime)reader["DateDengagement"],
+                HireDate = (DateTime)reader["DateDEngagement"],
                 Fonction = (string)reader["Fonction"],
                 Login = (string)reader["Login"],
+                AdresseID = (int)reader["PersoAdresseID"],
                 NbJoursAbsence = (int)reader["NbJourAbsence"],
                 NbJourVacance = (int)reader["NbJourVacances"],
                 Salaire = (double)reader["Salaire"],
-                AdRue = (string)reader["AdRue"],
-                AdNum = (string)reader["AdNum"],
-                AdCP = (int)reader["AdCp"],
-                AdVille = (string)reader["AdVille"],
-                AdPays = (string)reader["AdPays"],
-                NumTel = (int)reader["NumTel"],
-                Email = (string)reader["EMail"],
+                AdRue = (string)reader["PersonnelAdRue"],
+                AdNum = (string)reader["PersonnelAdNum"],
+                AdCP = (int)reader["PersonnelAdCp"],
+                AdVille = (string)reader["PersonnelAdVille"],
+                AdPays = (string)reader["PersonnelAdPays"],
+                NumTel = (int)reader["PersonnelNumTel"],
+                Email = (string)reader["PersoEmail"],
                 ShowroomId = (int)reader["ShowroomId"],
                 LieuDeTravail = new Showrooms
                 {
@@ -333,7 +358,7 @@ namespace DAL.Repository.UserRepository
                   AdVille = (string)reader["AdVille"],
                   AdPays = (string)reader["AdPays"],
                   NumTel = (int)reader["NumTel"],
-                  Email = (string)reader["EMail"],
+                  Email = (string)reader["Email"],
                   IsActif = (bool)reader["ShowroomIsActif"]
 
                 },
@@ -345,6 +370,9 @@ namespace DAL.Repository.UserRepository
         }
       }
     }
+
+    // Je ne remet pas les données du lieu de travail du personnel vu que c'est apd du showroom
+    // dans lequel il travail que je fais la recherche
     public IEnumerable<Personnel> GetPersonnelByShowroom(int idShowroom)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -364,39 +392,22 @@ namespace DAL.Repository.UserRepository
             {
               yield return new Personnel()
               {
-                ID = (int)reader["Id"],
+                ID = (int)reader["PersonnelID"],
                 Nom = (string)reader["Nom"],
                 Prenom = (string)reader["Prenom"],
                 DateDeNaissance = (DateTime)reader["DateDeNaissance"],
-                HireDate = (DateTime)reader["DateDengagement"],
+                HireDate = (DateTime)reader["DateDEngagement"],
                 Fonction = (string)reader["Fonction"],
-                Login = (string)reader["Login"],
-                NbJoursAbsence = (int)reader["NbJourAbsence"],
-                NbJourVacance = (int)reader["NbJourVacances"],
                 Salaire = (double)reader["Salaire"],
-                AdRue = (string)reader["AdRue"],
-                AdNum = (string)reader["AdNum"],
-                AdCP = (int)reader["AdCp"],
-                AdVille = (string)reader["AdVille"],
-                AdPays = (string)reader["AdPays"],
-                NumTel = (int)reader["NumTel"],
-                Email = (string)reader["EMail"],
-                ShowroomId = (int)reader["ShowroomId"],
-                LieuDeTravail = new Showrooms
-                {
-                  ID = (int)reader["ShowroomID"],
-                  Nom = (string)reader["ShowroomName"],
-                  NumBCE = (string)reader["ShowroomNumBCE"],
-                  AdRue = (string)reader["AdRue"],
-                  AdNum = (string)reader["AdNum"],
-                  AdCP = (int)reader["AdCp"],
-                  AdVille = (string)reader["AdVille"],
-                  AdPays = (string)reader["AdPays"],
-                  NumTel = (int)reader["NumTel"],
-                  Email = (string)reader["EMail"],
-                  IsActif = (bool)reader["ShowroomIsActif"]
-
-                },
+                Login = (string)reader["Login"],
+                AdRue = (string)reader["PersonnelAdRue"],
+                AdNum = (string)reader["PersonnelAdNum"],
+                AdCP = (int)reader["PersonnelAdCp"],
+                AdVille = (string)reader["PersonnelAdVille"],
+                AdPays = (string)reader["PersonnelAdPays"],
+                NumTel = (int)reader["PersonnelNumTel"],
+                Email = (string)reader["PersonnelEmail"],
+                ShowroomId = (int)reader["ShowroomID"],
                 IsActif = (bool)reader["IsActif"],
                 IsAdmin = (bool)reader["IsAdmin"]
               };
@@ -405,6 +416,8 @@ namespace DAL.Repository.UserRepository
         }
       }
     }
+
+    //Ok
     public void UnsetAdmin(int id)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -413,7 +426,7 @@ namespace DAL.Repository.UserRepository
         {
           command.CommandType = CommandType.StoredProcedure;
           command.CommandText = "SP_Personnel_UnsetAdmin";
-          command.Parameters.AddWithValue("@Id", id);
+          command.Parameters.AddWithValue("@id", id);
           if (connection.State != ConnectionState.Open)
           {
             connection.Open();
@@ -422,7 +435,9 @@ namespace DAL.Repository.UserRepository
         }
       }
     }
-    public void Update(int id, Personnel entity)
+
+    //Ok rectifié
+    public void Update(Personnel entity)
     {
       using (SqlConnection connection = new SqlConnection(_constring))
       {
@@ -440,6 +455,7 @@ namespace DAL.Repository.UserRepository
           command.Parameters.AddWithValue("@DateDengagement", entity.HireDate);
           command.Parameters.AddWithValue("@NbJourAbsence", entity.NbJoursAbsence);
           command.Parameters.AddWithValue("@NbJourVacances", entity.NbJourVacance);
+          command.Parameters.AddWithValue("@Salaire", entity.Salaire);
           command.Parameters.AddWithValue("@ShowroomId", entity.ShowroomId);
           command.Parameters.AddWithValue("@adRue", entity.AdRue);
           command.Parameters.AddWithValue("@adNum", entity.AdNum);
@@ -448,8 +464,10 @@ namespace DAL.Repository.UserRepository
           command.Parameters.AddWithValue("@adPays", entity.AdPays);
           command.Parameters.AddWithValue("@email", entity.Email);
           command.Parameters.AddWithValue("@numTel", entity.NumTel);
-          command.Parameters.AddWithValue("@id", id);
+          command.Parameters.AddWithValue("@id", entity.ID);
           command.Parameters.AddWithValue("@isActif", entity.IsActif);
+          command.Parameters.AddWithValue("@adresseId", entity.AdresseID);
+ 
           if (connection.State != ConnectionState.Open)
           {
             connection.Open();
