@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repository.CommandesRepository
 {
-  public class CommandeRepository : IRepository<int, Commandes>
+  public class CommandeRepository : ICommandeRepository<int, Commandes>
   {
     private string _constring = ConfigurationManager.ConnectionStrings["BDD_Familit"].ConnectionString;
 
