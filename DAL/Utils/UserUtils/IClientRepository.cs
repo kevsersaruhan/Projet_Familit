@@ -15,5 +15,6 @@ namespace DAL.Utils.UserUtils
     IEnumerable<T> GetByName(string name);
     void Desactiver(TKey id);
     void Activer(TKey id);
+    IEnumerable<T> GetFournisseur();
   }
 }
