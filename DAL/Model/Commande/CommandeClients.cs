@@ -13,7 +13,7 @@ namespace DAL.Model.Commande
   public class CommandeClients : Commandes
   {
   
-    public int VendeurID { get; set; }
+    public int? VendeurID { get; set; }
     public string MoyenDePaiement { get; set; }
     public string Statut { get; set; }
     public bool? Livraison { get; set; }

@@ -20,18 +20,12 @@ namespace DAL.Model.User
     public string Fonction { get; set; }
     public bool IsAdmin { get; set; }
     public DateTime HireDate { get; set; }
-    public int NbJoursAbsence { get; set; }
-    public int NbJourVacance { get; set; }
+    public int? NbJoursAbsence { get; set; }
+    public int? NbJourVacance { get; set; }
     public double Salaire { get; set; }
     public Showrooms LieuDeTravail { get; set; }
 
-    private int _ShowroomId;
-    public int ShowroomId
-    {
-      get { return _ShowroomId; }
-      set { _ShowroomId = LieuDeTravail.ID; }
-    }
-
+    public int ShowroomId { get; set; }
 
   }
 }

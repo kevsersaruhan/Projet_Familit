@@ -172,17 +172,17 @@ namespace DAL.Repository.UserRepository
                 Nom = (string)reader["Nom"],
                 Prenom = (string)reader["Prenom"],
                 Login = (string)reader["Login"],
-                AdresseID =(int)reader["AdresseId"],
-                NumBCE=(string)reader["NumBCE"],
-                EstFournisseur=(bool)reader["EstFournisseur"],
+                AdresseID = (int)reader["AdresseId"],
+                NumBCE = (string)reader["NumBCE"],
+                EstFournisseur = (bool)reader["EstFournisseur"],
                 AdRue = (string)reader["AdRue"],
                 AdNum = (string)reader["AdNum"],
                 AdCP = (int)reader["AdCp"],
                 AdVille = (string)reader["AdVille"],
                 AdPays = (string)reader["AdPays"],
-                NumTel = (int)reader["NumTel"],
+                NumTel = (reader["NumTel"] == DBNull.Value) ? null : (int?)reader["NumTel"],
                 Email = (string)reader["EMail"],
-                IsActif =(bool)reader["IsActif"]
+                IsActif = (bool)reader["IsActif"]
               };
             }
           }
@@ -221,7 +221,7 @@ namespace DAL.Repository.UserRepository
                 AdCP = (int)reader["AdCp"],
                 AdVille = (string)reader["AdVille"],
                 AdPays = (string)reader["AdPays"],
-                NumTel = (int)reader["NumTel"],
+                NumTel = (reader["NumTel"] == DBNull.Value) ? null : (int?)reader["NumTel"],
                 Email = (string)reader["EMail"],
                 IsActif = (bool)reader["IsActif"]
               };
@@ -262,7 +262,7 @@ namespace DAL.Repository.UserRepository
                 AdCP = (int)reader["AdCp"],
                 AdVille = (string)reader["AdVille"],
                 AdPays = (string)reader["AdPays"],
-                NumTel = (int)reader["NumTel"],
+                NumTel = (reader["NumTel"] == DBNull.Value) ? null : (int?)reader["NumTel"],
                 Email = (string)reader["EMail"],
                 IsActif = (bool)reader["IsActif"]
               };
@@ -308,7 +308,7 @@ namespace DAL.Repository.UserRepository
                 AdCP = (int)reader["AdCp"],
                 AdVille = (string)reader["AdVille"],
                 AdPays = (string)reader["AdPays"],
-                NumTel = (int)reader["NumTel"],
+                NumTel = (reader["NumTel"] == DBNull.Value) ? null : (int?)reader["NumTel"],
                 Email = (string)reader["EMail"],
                 IsActif = (bool)reader["IsActif"]
               };
@@ -318,7 +318,6 @@ namespace DAL.Repository.UserRepository
       }
     }
 
-    //Ok
     public void Update(Client entity)
     {
       using (SqlConnection connection = new SqlConnection(_constring))

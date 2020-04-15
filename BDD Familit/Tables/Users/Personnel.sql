@@ -12,7 +12,7 @@ CREATE TABLE [dbo].[Personnel]
     [NbJourAbsence] INT NULL, 
     [NbJourVacances] INT NULL, 
     [Salaire] FLOAT NOT NULL, 
-    [AdresseId] INT NULL,
+    [AdresseId] INT NOT NULL,
     [ShowroomId] INT NOT NULL, 
     [IsActif] BIT NOT NULL, 
     CONSTRAINT FK_Adresse_Personnel FOREIGN KEY ([AdresseId]) REFERENCES [Adresse]([Id]),

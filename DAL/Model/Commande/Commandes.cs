@@ -22,7 +22,7 @@ namespace DAL.Model.Commande
     public double Acompte { get; set; }
     public double Solde { get; set; }
     public Showrooms Showroom { get; set; }
-    public int ShowroomID { get; set; }
+    public int? ShowroomID { get; set; }
     public string TypeDeCommande { get; set; }
   }
 }

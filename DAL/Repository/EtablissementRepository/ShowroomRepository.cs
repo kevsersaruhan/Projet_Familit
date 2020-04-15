@@ -1,5 +1,6 @@
 using DAL.Model.Etablissement;
 using DAL.Utils.EtablissementUtils;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -97,7 +98,6 @@ namespace DAL.Repository.EtablissementRepository
       }
     }
 
-    // Get Ok au niveau des paramètres
     public IEnumerable<Showrooms> Get()
     {
       using (SqlConnection connection = new SqlConnection(_constring))
@@ -125,10 +125,10 @@ namespace DAL.Repository.EtablissementRepository
                 AdCP = (int)reader["AdCp"],
                 AdVille = (string)reader["AdVille"],
                 AdPays = (string)reader["AdPays"],
-                NumTel = (int)reader["NumTel"],
+                NumTel = (reader["NumTel"] == DBNull.Value) ? null : (int?)reader["NumTel"],
                 Email = (string)reader["Email"],
                 IsActif = (bool)reader["IsActif"]
-              }; 
+              };
             }
           }
         }
@@ -164,7 +164,7 @@ namespace DAL.Repository.EtablissementRepository
                 AdCP = (int)reader["AdCp"],
                 AdVille = (string)reader["AdVille"],
                 AdPays = (string)reader["AdPays"],
-                NumTel = (int)reader["NumTel"],
+                NumTel = (reader["NumTel"] == DBNull.Value) ? null : (int?)reader["NumTel"],
                 Email = (string)reader["Email"],
                 IsActif = (bool)reader["IsActif"]
               };
@@ -207,7 +207,7 @@ namespace DAL.Repository.EtablissementRepository
                 AdVille = (string)reader["AdVille"],
                 AdPays = (string)reader["AdPays"],
                 IsActif = (bool)reader["IsActif"],
-                NumTel = (int)reader["NumTel"],
+                NumTel = (reader["NumTel"] == DBNull.Value) ? null : (int?)reader["NumTel"],
                 Email = (string)reader["Email"]
               };
             }
@@ -215,6 +215,7 @@ namespace DAL.Repository.EtablissementRepository
         }
       }
     }
+
 
     // Ok au niveau des paramètres
     public void Update(Showrooms entity)

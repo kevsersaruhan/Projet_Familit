@@ -5,7 +5,7 @@ CREATE TABLE [dbo].[Client]
     [Prenom] NVARCHAR(60) NOT NULL, 
     [Login] NVARCHAR(60) NULL, 
     [Password] NVARCHAR(10) NULL,
-    [AdresseId] INT NULL, 
+    [AdresseId] INT NOT NULL, 
     [NumBCE] NVARCHAR(12) NULL, 
     [EstFournisseur] BIT NOT NULL, 
     [IsActif] BIT NOT NULL, 

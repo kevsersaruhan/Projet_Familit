@@ -23,7 +23,7 @@ namespace DAL.Model.Etablissement
     public int AdCP { get; set; }
     public string AdVille { get; set; }
     public string AdPays { get; set; }
-    public int NumTel { get; set; }
+    public int? NumTel { get; set; }
     public string Email { get; set; }
     public IEnumerable<Personnel>  PersonnelList { get; set; }
     public bool IsActif { get; set; }

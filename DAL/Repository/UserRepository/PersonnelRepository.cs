@@ -178,6 +178,7 @@ namespace DAL.Repository.UserRepository
       }
     }
 
+
     //Ok
     public IEnumerable<Personnel> Get()
     {
@@ -204,18 +205,18 @@ namespace DAL.Repository.UserRepository
                 HireDate = (DateTime)reader["DateDEngagement"],
                 Fonction = (string)reader["Fonction"],
                 Login = (string)reader["Login"],
-                AdresseID =(int)reader["PersoAdresseID"],
-                NbJoursAbsence = (int)reader["NbJourAbsence"],
-                NbJourVacance = (int)reader["NbJourVacances"],
+                AdresseID = (int)reader["PersoAdresseID"],
+                NbJoursAbsence = (reader["NbJourAbsence"] == DBNull.Value) ? null : (int?)reader["NbJourAbsence"],
+                NbJourVacance = (reader["NbJourVacances"] == DBNull.Value) ? null : (int?)reader["NbJourVacances"],
                 Salaire = (double)reader["Salaire"],
                 AdRue = (string)reader["PersonnelAdRue"],
                 AdNum = (string)reader["PersonnelAdNum"],
                 AdCP = (int)reader["PersonnelAdCp"],
                 AdVille = (string)reader["PersonnelAdVille"],
                 AdPays = (string)reader["PersonnelAdPays"],
-                NumTel = (int)reader["PersonnelNumTel"],
+                NumTel = (reader["PersonnelNumTel"] == DBNull.Value) ? null : (int?)reader["PersonnelNumTel"],
                 Email = (string)reader["PersoEmail"],
-                ShowroomId=(int)reader["ShowroomId"],
+                ShowroomId = (int)reader["ShowroomId"],
                 LieuDeTravail = new Showrooms
                 {
                   ID = (int)reader["ShowroomID"],
@@ -226,13 +227,13 @@ namespace DAL.Repository.UserRepository
                   AdCP = (int)reader["AdCp"],
                   AdVille = (string)reader["AdVille"],
                   AdPays = (string)reader["AdPays"],
-                  NumTel = (int)reader["NumTel"],
+                  NumTel = (reader["NumTel"] == DBNull.Value) ? null : (int?)reader["NumTel"],
                   Email = (string)reader["Email"],
                   IsActif = (bool)reader["ShowroomIsActif"]
 
                 },
-                IsActif=(bool)reader["IsActif"],
-                IsAdmin=(bool)reader["IsAdmin"]
+                IsActif = (bool)reader["IsActif"],
+                IsAdmin = (bool)reader["IsAdmin"]
               };
             }
           }
@@ -268,15 +269,15 @@ namespace DAL.Repository.UserRepository
                 Fonction = (string)reader["Fonction"],
                 Login = (string)reader["Login"],
                 AdresseID = (int)reader["PersoAdresseID"],
-                NbJoursAbsence = (int)reader["NbJourAbsence"],
-                NbJourVacance = (int)reader["NbJourVacances"],
+                NbJoursAbsence = (reader["NbJourAbsence"] == DBNull.Value) ? null : (int?)reader["NbJourAbsence"],
+                NbJourVacance = (reader["NbJourVacances"] == DBNull.Value) ? null : (int?)reader["NbJourVacances"],
                 Salaire = (double)reader["Salaire"],
                 AdRue = (string)reader["PersonnelAdRue"],
                 AdNum = (string)reader["PersonnelAdNum"],
                 AdCP = (int)reader["PersonnelAdCp"],
                 AdVille = (string)reader["PersonnelAdVille"],
                 AdPays = (string)reader["PersonnelAdPays"],
-                NumTel = (int)reader["PersonnelNumTel"],
+                NumTel = (reader["PersonnelNumTel"] == DBNull.Value) ? null : (int?)reader["PersonnelNumTel"],
                 Email = (string)reader["PersoEmail"],
                 ShowroomId = (int)reader["ShowroomId"],
                 LieuDeTravail = new Showrooms
@@ -289,7 +290,7 @@ namespace DAL.Repository.UserRepository
                   AdCP = (int)reader["AdCp"],
                   AdVille = (string)reader["AdVille"],
                   AdPays = (string)reader["AdPays"],
-                  NumTel = (int)reader["NumTel"],
+                  NumTel = (reader["NumTel"] == DBNull.Value) ? null : (int?)reader["NumTel"],
                   Email = (string)reader["Email"],
                   IsActif = (bool)reader["ShowroomIsActif"]
 
@@ -336,15 +337,15 @@ namespace DAL.Repository.UserRepository
                 Fonction = (string)reader["Fonction"],
                 Login = (string)reader["Login"],
                 AdresseID = (int)reader["PersoAdresseID"],
-                NbJoursAbsence = (int)reader["NbJourAbsence"],
-                NbJourVacance = (int)reader["NbJourVacances"],
+                NbJoursAbsence = (reader["NbJourAbsence"] == DBNull.Value) ? null : (int?)reader["NbJourAbsence"],
+                NbJourVacance = (reader["NbJourVacances"] == DBNull.Value) ? null : (int?)reader["NbJourVacances"],
                 Salaire = (double)reader["Salaire"],
                 AdRue = (string)reader["PersonnelAdRue"],
                 AdNum = (string)reader["PersonnelAdNum"],
                 AdCP = (int)reader["PersonnelAdCp"],
                 AdVille = (string)reader["PersonnelAdVille"],
                 AdPays = (string)reader["PersonnelAdPays"],
-                NumTel = (int)reader["PersonnelNumTel"],
+                NumTel = (reader["PersonnelNumTel"] == DBNull.Value) ? null : (int?)reader["PersonnelNumTel"],
                 Email = (string)reader["PersoEmail"],
                 ShowroomId = (int)reader["ShowroomId"],
                 LieuDeTravail = new Showrooms
@@ -357,7 +358,7 @@ namespace DAL.Repository.UserRepository
                   AdCP = (int)reader["AdCp"],
                   AdVille = (string)reader["AdVille"],
                   AdPays = (string)reader["AdPays"],
-                  NumTel = (int)reader["NumTel"],
+                  NumTel = (reader["NumTel"] == DBNull.Value) ? null : (int?)reader["NumTel"],
                   Email = (string)reader["Email"],
                   IsActif = (bool)reader["ShowroomIsActif"]
 
@@ -405,8 +406,8 @@ namespace DAL.Repository.UserRepository
                 AdCP = (int)reader["PersonnelAdCp"],
                 AdVille = (string)reader["PersonnelAdVille"],
                 AdPays = (string)reader["PersonnelAdPays"],
-                NumTel = (int)reader["PersonnelNumTel"],
-                Email = (string)reader["PersonnelEmail"],
+                NumTel = (reader["PersonnelNumTel"] == DBNull.Value) ? null : (int?)reader["PersonnelNumTel"],
+                Email = (string)reader["PersoEmail"],
                 ShowroomId = (int)reader["ShowroomID"],
                 IsActif = (bool)reader["IsActif"],
                 IsAdmin = (bool)reader["IsAdmin"]

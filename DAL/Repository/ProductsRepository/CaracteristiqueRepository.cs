@@ -78,13 +78,13 @@ namespace DAL.Repository.ProductsRepository
                 Id = (int)reader["Id"],
                 Nom = (string)reader["Nom"],
                 Details = (string)reader["Details"],
-                CatId = (int)reader["CategorieId"],
+                CatId = (reader["CategorieId"] == DBNull.Value) ? null : (int?)reader["CategorieId"],
                 Categorie = new Categories
                 {
-                  ID=(int)reader["CatID"],
-                  Nom=(string)reader["CatNom"],
-                  Details=(string)reader["CatDetails"],
-                  IsActif=(bool)reader["IsActif"]
+                  ID = (int)reader["CatID"],
+                  Nom = (string)reader["CatNom"],
+                  Details = (string)reader["CatDetails"],
+                  IsActif = (bool)reader["IsActif"]
                 }
               };
             }
@@ -116,7 +116,7 @@ namespace DAL.Repository.ProductsRepository
                 Id = (int)reader["Id"],
                 Nom = (string)reader["Nom"],
                 Details = (string)reader["Details"],
-                CatId = (int)reader["CategorieId"],
+                CatId = (reader["CategorieId"] == DBNull.Value) ? null : (int?)reader["CategorieId"],
                 Categorie = new Categories
                 {
                   ID = (int)reader["CatID"],
@@ -125,7 +125,7 @@ namespace DAL.Repository.ProductsRepository
                   IsActif = (bool)reader["IsActif"]
                 }
               };
-         
+
             }
             else
             {
@@ -160,7 +160,7 @@ namespace DAL.Repository.ProductsRepository
                 Id = (int)reader["Id"],
                 Nom = (string)reader["Nom"],
                 Details = (string)reader["Details"],
-                CatId = (int)reader["CategorieId"],
+                CatId = (reader["CategorieId"] == DBNull.Value) ? null : (int?)reader["CategorieId"],
                 Categorie = new Categories
                 {
                   ID = (int)reader["CatID"],
@@ -198,7 +198,7 @@ namespace DAL.Repository.ProductsRepository
                 Id = (int)reader["Id"],
                 Nom = (string)reader["Nom"],
                 Details = (string)reader["Details"],
-                CatId = (int)reader["CategorieId"],
+                CatId = (reader["CategorieId"] == DBNull.Value) ? null : (int?)reader["CategorieId"],
                 Categorie = new Categories
                 {
                   ID = (int)reader["CatID"],

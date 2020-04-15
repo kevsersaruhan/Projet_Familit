@@ -93,9 +93,9 @@ namespace DAL.Repository.CommandesRepository
                 Solde = (double)reader["Solde"],
                 MoyenDePaiement = (string)reader["MoyenDePaiement"],
                 Statut = (string)reader["Statut"],
-                DateDeLivraison=(DateTime)reader["DateDeLivraison"],
-                TypeDeCommande=(string)reader["TypeDeCommande"],
-                Livraison=(bool)reader["Livraison"],
+                DateDeLivraison = (reader["DateDeLivraison"] == DBNull.Value) ? null : (DateTime?)reader["DateDeLivraison"],
+                TypeDeCommande = (string)reader["TypeDeCommande"],
+                Livraison = (reader["Livraison"] == DBNull.Value) ? null : (bool?)reader["Livraison"],
                 Showroom = new Showrooms
                 {
                   ID = (int)reader["IDShowroom"],
@@ -106,13 +106,13 @@ namespace DAL.Repository.CommandesRepository
                   AdCP = (int)reader["AdCp"],
                   AdVille = (string)reader["AdVille"],
                   AdPays = (string)reader["AdPays"],
-                  NumTel = (int)reader["NumTel"],
+                  NumTel = (reader["NumTel"] == DBNull.Value) ? null : (int?)reader["NumTel"],
                   Email = (string)reader["EMail"],
                   IsActif = (bool)reader["IsActif"]
                 },
-                ShowroomID = (int)reader["ComShowroomID"],
-                ClientID =(int)reader["ClientId"],
-                VendeurID=(int)reader["PersonnelId"]
+                ShowroomID = (reader["ComShowroom"] == DBNull.Value) ? null : (int?)reader["ComShowroom"],
+                ClientID = (int)reader["ClientId"],
+                VendeurID = (reader["PersonnelId"] == DBNull.Value) ? null : (int?)reader["PersonnelId"]
               };
             }
           }
@@ -138,7 +138,7 @@ namespace DAL.Repository.CommandesRepository
           {
             if (reader.Read())
             {
-             return new CommandeClients()
+              return new CommandeClients()
               {
                 ID = (int)reader["Id"],
                 DateDeCommande = (DateTime)reader["DateCommande"],
@@ -147,26 +147,26 @@ namespace DAL.Repository.CommandesRepository
                 Solde = (double)reader["Solde"],
                 MoyenDePaiement = (string)reader["MoyenDePaiement"],
                 Statut = (string)reader["Statut"],
-                DateDeLivraison = (DateTime)reader["DateDeLivraison"],
+                DateDeLivraison = (reader["DateDeLivraison"] == DBNull.Value) ? null : (DateTime?)reader["DateDeLivraison"],
                 TypeDeCommande = (string)reader["TypeDeCommande"],
-                Livraison = (bool)reader["Livraison"],
-               Showroom = new Showrooms
-               {
-                 ID = (int)reader["IDShowroom"],
-                 Nom = (string)reader["Nom"],
-                 NumBCE = (string)reader["NumBCE"],
-                 AdRue = (string)reader["AdRue"],
-                 AdNum = (string)reader["AdNum"],
-                 AdCP = (int)reader["AdCp"],
-                 AdVille = (string)reader["AdVille"],
-                 AdPays = (string)reader["AdPays"],
-                 NumTel = (int)reader["NumTel"],
-                 Email = (string)reader["EMail"],
-                 IsActif = (bool)reader["IsActif"]
-               },
-               ShowroomID = (int)reader["ComShowroomID"],
-               ClientID = (int)reader["ClientId"],
-                VendeurID = (int)reader["PersonnelId"]
+                Livraison = (reader["Livraison"] == DBNull.Value) ? null : (bool?)reader["Livraison"],
+                Showroom = new Showrooms
+                {
+                  ID = (int)reader["IDShowroom"],
+                  Nom = (string)reader["Nom"],
+                  NumBCE = (string)reader["NumBCE"],
+                  AdRue = (string)reader["AdRue"],
+                  AdNum = (string)reader["AdNum"],
+                  AdCP = (int)reader["AdCp"],
+                  AdVille = (string)reader["AdVille"],
+                  AdPays = (string)reader["AdPays"],
+                  NumTel = (reader["NumTel"] == DBNull.Value) ? null : (int?)reader["NumTel"],
+                  Email = (string)reader["EMail"],
+                  IsActif = (bool)reader["IsActif"]
+                },
+                ShowroomID = (reader["ComShowroom"] == DBNull.Value) ? null : (int?)reader["ComShowroom"],
+                ClientID = (int)reader["ClientId"],
+                VendeurID = (reader["PersonnelId"] == DBNull.Value) ? null : (int?)reader["PersonnelId"]
               };
             }
             else
@@ -237,9 +237,9 @@ namespace DAL.Repository.CommandesRepository
                 Solde = (double)reader["Solde"],
                 MoyenDePaiement = (string)reader["MoyenDePaiement"],
                 Statut = (string)reader["Statut"],
-                DateDeLivraison = (DateTime)reader["DateDeLivraison"],
+                DateDeLivraison = (reader["DateDeLivraison"] == DBNull.Value) ? null : (DateTime?)reader["DateDeLivraison"],
                 TypeDeCommande = (string)reader["TypeDeCommande"],
-                Livraison = (bool)reader["Livraison"],
+                Livraison = (reader["Livraison"] == DBNull.Value) ? null : (bool?)reader["Livraison"],
                 Showroom = new Showrooms
                 {
                   ID = (int)reader["IDShowroom"],
@@ -250,13 +250,13 @@ namespace DAL.Repository.CommandesRepository
                   AdCP = (int)reader["AdCp"],
                   AdVille = (string)reader["AdVille"],
                   AdPays = (string)reader["AdPays"],
-                  NumTel = (int)reader["NumTel"],
+                  NumTel = (reader["NumTel"] == DBNull.Value) ? null : (int?)reader["NumTel"],
                   Email = (string)reader["EMail"],
                   IsActif = (bool)reader["IsActif"]
                 },
-                ShowroomID = (int)reader["ComShowroomID"],
+                ShowroomID = (reader["ComShowroom"] == DBNull.Value) ? null : (int?)reader["ComShowroom"],
                 ClientID = (int)reader["ClientId"],
-                VendeurID = (int)reader["PersonnelId"]
+                VendeurID = (reader["PersonnelId"] == DBNull.Value) ? null : (int?)reader["PersonnelId"]
               };
             }
           }

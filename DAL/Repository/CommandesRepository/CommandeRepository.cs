@@ -102,10 +102,10 @@ namespace DAL.Repository.CommandesRepository
                   AdCP = (int)reader["AdCp"],
                   AdVille = (string)reader["AdVille"],
                   AdPays = (string)reader["AdPays"],
-                  NumTel = (int)reader["NumTel"],
+                  NumTel = (reader["NumTel"] == DBNull.Value) ? null : (int?)reader["NumTel"],
                   Email = (string)reader["EMail"]
                 },
-                ShowroomID = (int)reader["ComShowroomID"],
+                ShowroomID = (reader["ComShowroomID"] == DBNull.Value) ? null : (int?)reader["ComShowroomID"],
                 ClientID = (int)reader["ClientId"]
               };
             }
@@ -150,10 +150,10 @@ namespace DAL.Repository.CommandesRepository
                   AdCP = (int)reader["AdCp"],
                   AdVille = (string)reader["AdVille"],
                   AdPays = (string)reader["AdPays"],
-                  NumTel = (int)reader["NumTel"],
+                  NumTel = (reader["NumTel"] == DBNull.Value) ? null : (int?)reader["NumTel"],
                   Email = (string)reader["EMail"]
                 },
-                ShowroomID = (int)reader["ComShowroomID"],
+                ShowroomID = (reader["ComShowroomID"] == DBNull.Value) ? null : (int?)reader["ComShowroomID"],
                 ClientID = (int)reader["ClientId"]
               };
             }
@@ -182,7 +182,7 @@ namespace DAL.Repository.CommandesRepository
           command.Parameters.AddWithValue("@TypeDecommande", entity.TypeDeCommande);
           command.Parameters.AddWithValue("@ClientId", entity.ClientID);
           command.Parameters.AddWithValue("@ShowroomId", entity.ShowroomID);
-          command.Parameters.AddWithValue("@id",entity.ID);
+          command.Parameters.AddWithValue("@id", entity.ID);
           command.Parameters.AddWithValue("@MoyenDePaiement", null);
           command.Parameters.AddWithValue("@Statut", null);
           command.Parameters.AddWithValue("@Livraison", null);
@@ -230,11 +230,11 @@ namespace DAL.Repository.CommandesRepository
                   AdCP = (int)reader["AdCp"],
                   AdVille = (string)reader["AdVille"],
                   AdPays = (string)reader["AdPays"],
-                  NumTel = (int)reader["NumTel"],
+                  NumTel = (reader["NumTel"] == DBNull.Value) ? null : (int?)reader["NumTel"],
                   Email = (string)reader["EMail"],
                   IsActif = (bool)reader["IsActif"]
                 },
-                ShowroomID = (int)reader["ComShowroomID"],
+                ShowroomID = (reader["ComShowroomID"] == DBNull.Value) ? null : (int?)reader["ComShowroomID"],
                 ClientID = (int)reader["ClientId"]
               };
             }
