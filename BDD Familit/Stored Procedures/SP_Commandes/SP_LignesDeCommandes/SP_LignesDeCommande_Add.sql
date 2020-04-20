@@ -5,7 +5,7 @@ CREATE PROCEDURE [dbo].[SP_LignesDeCommande_Add]
   @TVAC float,
   @ProductID int,
   @CommandeId int,
-  @productName nchar(100)
+  @productName nvarchar(100)
 AS
 	INSERT INTO LignesDeCommandes ([ProductName],[Total],[Quantite],[HTVA],[TVAC],[ProductId],[CommandeId]) OUTPUT INSERTED.Id
   VALUES (@productName,@Total,@quantite,@HTVA,@TVAC,@ProductID,@CommandeId)

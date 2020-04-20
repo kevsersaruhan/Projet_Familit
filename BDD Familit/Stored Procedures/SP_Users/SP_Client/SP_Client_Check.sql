@@ -1,6 +1,6 @@
 CREATE PROCEDURE [dbo].[SP_Client_Check]
 	@login NVARCHAR(50),
-	@password NVARCHAR(50),
+	@password NVARCHAR (60),
 	@clientId INT OUTPUT
 AS
 	SET @clientId = 0;

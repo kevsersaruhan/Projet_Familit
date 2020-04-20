@@ -17,4 +17,4 @@ AS
                         [Statut]=@statut,[Livraison]=@Livraison,[DateDeLivraison]=@DateDeLivraison,[TypeDeCommande]=@TypeDecommande,[ClientId]=@ClientId,
                         [PersonnelId]=@PersonnelId,[ShowroomID]=@showroomId
                     WHERE [Id] = @id
-RETURN 0
+

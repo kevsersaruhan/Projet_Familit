@@ -1,6 +1,6 @@
 CREATE PROCEDURE [dbo].[SP_Personnel_Check]
 	@login NVARCHAR(50),
-	@password NVARCHAR(50),
+	@password NVARCHAR(60),
 	@persoId INT OUTPUT
 AS
 	SET @persoId = 0;

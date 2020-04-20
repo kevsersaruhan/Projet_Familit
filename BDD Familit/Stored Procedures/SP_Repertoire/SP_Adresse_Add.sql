@@ -5,10 +5,12 @@ CREATE PROCEDURE [dbo].[SP_Adresse_Add]
   @adVille NVARCHAR(60),
   @adPays NVARCHAR(60),
   @email NVARCHAR(60),
-  @numTel int
+  @numTel int,
+  @id int output
 AS
+SET @id =0
 	INSERT  INTO Adresse ([AdRue],[AdNum],[AdCp],[AdVille],[AdPays],[NumTel],[EMail])
-  OUTPUT inserted.Id
+  OUTPUT   inserted.Id
   VALUES (@adRue,@adNum,@adCp,@adVille,@adPays,@numTel,@email)
-  DECLARE @AdresseId int = SCOPE_IDENTITY()
-RETURN @AdresseId
+  SET @id = SCOPE_IDENTITY()
+RETURN @id

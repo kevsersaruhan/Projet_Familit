@@ -3,7 +3,6 @@ CREATE PROCEDURE [dbo].[SP_Personnel_Update]
   @Prenom NVARCHAR(60),
   @dateDeNaissance Date,
   @login NVARCHAR (60),
-  @Password NVARCHAR(60),
   @Function NVARCHAR(60),
   @IsAdmin Bit,
   @DateDengagement Date,
@@ -12,20 +11,12 @@ CREATE PROCEDURE [dbo].[SP_Personnel_Update]
   @Salaire float,
   @ShowroomId int,
   @adresseId int,
- 	@adRue NVARCHAR(60),
-	@adNum NVARCHAR(6),
-  @adCp int,
-  @adVille NVARCHAR(60),
-  @adPays NVARCHAR(60),
-  @email NVARCHAR(60),
-  @numTel int,
   @id int,
   @IsActif bit
 
 AS
-  EXEC [dbo].SP_Adresse_Update @adRue, @adNum, @adCp, @adVille, @adPays,@email, @numTel, @adresseId
-	UPDATE [Personnel] SET [Nom]=@nom,[Prenom]=@Prenom,[DateDeNaissance]=@dateDeNaissance,[Login]=@login,
-                         [Password]=[dbo].SF_HashPassword(@Password), [Fonction]=@Function, [IsAdmin]=@IsAdmin,
+
+	UPDATE [Personnel] SET [Nom]=@nom,[Prenom]=@Prenom,[DateDeNaissance]=@dateDeNaissance,[Login]=@login, [Fonction]=@Function, [IsAdmin]=@IsAdmin,
                          [DateDEngagement]=@DateDengagement,[NbJourAbsence]=@NbJourAbsence, [NbJourVacances]=@NbJourAbsence, [Salaire]=@Salaire,
                          [AdresseId]=@adresseId,[ShowroomId]=@ShowroomId,[IsActif]=@IsActif
                      WHERE Id =@id

@@ -169,8 +169,8 @@
     <Build Include="Stored Procedures\SP_Products\SP_Products\SP_Product_Desactiver.sql" />
     <Build Include="Stored Procedures\SP_Products\SP_Categories\SP_Categorie_Activer.sql" />
     <Build Include="Stored Procedures\SP_Products\SP_Categories\SP_Categorie_Desactiver.sql" />
-    <Build Include="Stored Procedures\SP_Users\SP_Personnel\SP_Personnel_Actvier.sql" />
-    <Build Include="Stored Procedures\SP_Users\SP_Personnel\SP_Personnel_Desactvier.sql" />
+    <Build Include="Stored Procedures\SP_Users\SP_Personnel\SP_Personnel_Activer.sql" />
+    <Build Include="Stored Procedures\SP_Users\SP_Personnel\SP_Personnel_Desactiver.sql" />
     <Build Include="Stored Procedures\SP_Users\SP_Client\SP_Client_Activer.sql" />
     <Build Include="Stored Procedures\SP_Users\SP_Client\SP_Client_Desactiver.sql" />
     <Build Include="Views\PersonnelShowroom.sql" />
